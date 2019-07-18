@@ -16,7 +16,9 @@ import {
     Modal,
     Frame,
     Loading,
-    Button
+    Button,
+    Stack,
+    RadioButton
 } from '@shopify/polaris';
 import {    
     HomeMajorMonotone,
@@ -36,13 +38,40 @@ const sidesItems = menuData.sides;
 const pitasItems = menuData.pitas;
 
 export default class Menu extends React.Component {
+    defaultState ={
+      itemDataField: {
+        "name": "",
+        "desc": "",
+        "price": "0",
+        "pizzas": "0",
+        "size": null,
+        "toppings": null,
+        "default_toppings": null,
+        "addon":  null,
+          "extras": {
+          "Wings": "0",
+          "Garlic bread with cheese": "False",
+          "Pop": "0",
+          "Dip": "0",
+          "Pasta": "False",
+          "Chips": "False"
+          }
+      }
+    }
     state = {
       showToast: false,
       isLoading: false,
       showMobileNavigation: false,
       modalActive: false,
       page: 'pizzaDeals',
-      editItem: null
+      value: 'disabled',
+      editItemData: this.defaultState.itemDataField,
+      pizzaToppings1: [],
+      pizzaToppings2: [],
+      pizzaToppings3: [],
+      addon: [],
+      pops: [],
+      dips: []
     };
 
     render() {
@@ -52,7 +81,7 @@ export default class Menu extends React.Component {
         showMobileNavigation,
         modalActive,
         page,
-        editItem
+        editItemData
       } = this.state;
 
       const toastMarkup = showToast ? (
@@ -135,7 +164,9 @@ export default class Menu extends React.Component {
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
                             <br/>
-                            <Button primary>Add to Cart</Button>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'sides')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -152,6 +183,10 @@ export default class Menu extends React.Component {
                     saladsItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
+                            <br/>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'salads')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -168,6 +203,10 @@ export default class Menu extends React.Component {
                     pitasItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
+                            <br/>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'pitas')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -185,7 +224,9 @@ export default class Menu extends React.Component {
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
                             <br/>
-                            <Button primary>Add to Cart</Button>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'wingsandsandwiches')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -203,7 +244,9 @@ export default class Menu extends React.Component {
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
                             <br/>
-                            <Button primary>Add to Cart</Button>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'specialty')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -220,6 +263,10 @@ export default class Menu extends React.Component {
                     pizzaDealsItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
+                            <br/>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'pizza_deals')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -235,6 +282,10 @@ export default class Menu extends React.Component {
                     freeDeliveryItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <p>{item.desc}</p>
+                            <br/>
+                            <Button primary
+                            onClick={() => this.editItem(item.name, 'freedelivery')}
+                            >Add to Cart</Button>
                         </Card>
                     ))
                 }
@@ -305,26 +356,36 @@ export default class Menu extends React.Component {
         <Modal
           open={modalActive}
           onClose={this.toggleState('modalActive')}
-          title="Contact support"
+          title={this.state.editItemData.name}
           primaryAction={{
-            content: 'Send',
+            content: 'Add to Cart',
             onAction: this.toggleState('modalActive'),
           }}
         >
           <Modal.Section>
-            <FormLayout>
-              <TextField
-                label="Subject"
-                value={this.state.supportSubject}
-                onChange={this.handleSubjectChange}
-              />
-              <TextField
-                label="Message"
-                value={this.state.supportMessage}
-                onChange={this.handleMessageChange}
-                multiline
-              />
-            </FormLayout>
+            <p>{this.state.editItemData.desc}</p>
+              <FormLayout>
+                <Stack>
+                  <RadioButton
+                    label="No Addons"
+                    checked={this.state.value === 'disabled'}
+                    id="noAddons"
+                    name="addons"
+                  />
+                  {(this.state.editItemData.addon || []).map(addon => (
+                      <RadioButton
+                        label={addon.name}
+                        id={addon.name}
+                        name="addons"
+                      />
+                    ))}
+                </Stack>
+                <FormLayout.Group condensed>
+                  <TextField label="Width" onChange={() => {}} />
+                  <TextField label="Height" onChange={() => {}} />
+                  <TextField label="Unit" onChange={() => {}} />
+                </FormLayout.Group>
+              </FormLayout>
           </Modal.Section>
         </Modal>
       );
@@ -353,7 +414,7 @@ export default class Menu extends React.Component {
               topBar={topBarMarkup}
               navigation={navigationMarkup}
               showMobileNavigation={showMobileNavigation}
-              onNavigationDismiss={this.toggleState('showMobileNavigation')}
+              onNavigationDismiss={() => this.toggleState('showMobileNavigation')}
             >
               {loadingMarkup}
               <PageLoad/>
@@ -378,4 +439,21 @@ export default class Menu extends React.Component {
         });
         this.toggleState('isLoading'); 
     };
+
+    editItem = (editItemName, editItemCategory) => {
+      var itemCategory = menuData[editItemCategory];
+      var itemDetails = null;
+      for(var i = 0; i < itemCategory.length; i++){
+        if(itemCategory[i].name == editItemName){
+          itemDetails = itemCategory[i];
+          break;
+        }
+      }
+      console.log(itemDetails)
+      this.setState({
+        editItemData: itemDetails,
+        modalActive: true
+      });
+    };
+  
   }
