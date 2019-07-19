@@ -18,7 +18,9 @@ import {
     Loading,
     Button,
     Stack,
-    RadioButton
+    RadioButton,
+    ChoiceList,
+    Subheading,
 } from '@shopify/polaris';
 import {    
     HomeMajorMonotone,
@@ -29,6 +31,7 @@ import {
 import React from 'react';
 
 const menuData = require('./menu/custom_json.json');
+const toppingData = require('./menu/topping_json.json');
 const pizzaDealsItems = menuData.pizza_deals;
 const specialtyPizzaItems = menuData.specialty;
 const freeDeliveryItems = menuData.freedelivery;
@@ -81,7 +84,13 @@ export default class Menu extends React.Component {
         showMobileNavigation,
         modalActive,
         page,
-        editItemData
+        editItemData,
+        pizzaToppings1,
+        pizzaToppings2,
+        pizzaToppings3,
+        addon,
+        pops,
+        dips
       } = this.state;
 
       const toastMarkup = showToast ? (
@@ -359,12 +368,17 @@ export default class Menu extends React.Component {
           title={this.state.editItemData.name}
           primaryAction={{
             content: 'Add to Cart',
-            onAction: this.toggleState('modalActive'),
+            onAction: this.addToCart,
           }}
         >
           <Modal.Section>
-            <p>{this.state.editItemData.desc}</p>
               <FormLayout>
+              <TextContainer>
+                <p>
+                  {this.state.editItemData.desc}
+                </p>
+              </TextContainer>
+                <Subheading>Addons</Subheading>
                 <Stack>
                   <RadioButton
                     label="No Addons"
@@ -380,12 +394,118 @@ export default class Menu extends React.Component {
                       />
                     ))}
                 </Stack>
-                <FormLayout.Group condensed>
-                  <TextField label="Width" onChange={() => {}} />
-                  <TextField label="Height" onChange={() => {}} />
-                  <TextField label="Unit" onChange={() => {}} />
-                </FormLayout.Group>
-              </FormLayout>
+                {
+                  Number(this.state.editItemData.pizzas) > 0 &&
+                  <Subheading>Pizza 1 - Toppings</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.pizzas) > 0 &&
+                  <FormLayout.Group condensed>
+                    <ChoiceList
+                      allowMultiple
+                      title={'Free Toppings'}
+                      choices={toppingData.Free_Toppings}
+                      selected={pizzaToppings1}
+                      onChange={this.pizzaToppings1}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Vegetable Toppings'}
+                      choices={toppingData.Vegetable}
+                      selected={pizzaToppings1}
+                      onChange={this.pizzaToppings1}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Cheese Toppings'}
+                      choices={toppingData.Cheese}
+                      selected={pizzaToppings1}
+                      onChange={this.pizzaToppings1}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Meat Toppings'}
+                      choices={toppingData.Meat}
+                      selected={pizzaToppings1}
+                      onChange={this.pizzaToppings1}
+                    />
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.pizzas) > 1 &&
+                  <Subheading>Pizza 2 - Toppings</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.pizzas) > 1 &&
+                  <FormLayout.Group condensed>
+                    <ChoiceList
+                      allowMultiple
+                      title={'Free Toppings'}
+                      choices={toppingData.Free_Toppings}
+                      selected={pizzaToppings2}
+                      onChange={this.pizzaToppings2}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Vegetable Toppings'}
+                      choices={toppingData.Vegetable}
+                      selected={pizzaToppings2}
+                      onChange={this.pizzaToppings2}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Cheese Toppings'}
+                      choices={toppingData.Cheese}
+                      selected={pizzaToppings2}
+                      onChange={this.pizzaToppings2}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Meat Toppings'}
+                      choices={toppingData.Meat}
+                      selected={pizzaToppings2}
+                      onChange={this.pizzaToppings2}
+                    />
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.pizzas) > 2 &&
+                  <Subheading>Pizza 3 - Toppings</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.pizzas) > 2 &&
+                  <FormLayout.Group condensed>
+                    <ChoiceList
+                      allowMultiple
+                      title={'Free Toppings'}
+                      choices={toppingData.Free_Toppings}
+                      selected={pizzaToppings3}
+                      onChange={this.pizzaToppings3}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Vegetable Toppings'}
+                      choices={toppingData.Vegetable}
+                      selected={pizzaToppings3}
+                      onChange={this.pizzaToppings3}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Cheese Toppings'}
+                      choices={toppingData.Cheese}
+                      selected={pizzaToppings3}
+                      onChange={this.pizzaToppings3}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Meat Toppings'}
+                      choices={toppingData.Meat}
+                      selected={pizzaToppings3}
+                      onChange={this.pizzaToppings3}
+                    />
+                  </FormLayout.Group>
+                }
+               </FormLayout> 
           </Modal.Section>
         </Modal>
       );
@@ -455,5 +575,20 @@ export default class Menu extends React.Component {
         modalActive: true
       });
     };
-  
+
+    pizzaToppings1 = value => {
+      this.setState({ pizzaToppings1: value });
+    };
+
+    pizzaToppings2 = value => {
+      this.setState({ pizzaToppings2: value });
+    };
+
+    pizzaToppings3 = value => {
+      this.setState({ pizzaToppings3: value });
+    };
+
+    addToCart = () => {
+      console.log(this.state.pizzaToppings1)
+    };
   }

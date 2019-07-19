@@ -1,180 +1,213 @@
 {
     "Meat" : [
         {
-            "name": "Pepperoni",
-            "value" : "1"
+            "label": "Pepperoni",
+            "value": "Pepperoni",
+            "count" : "1"
         },
         {
-            "name": "Chicken",
-            "value" : "2"
+            "label": "Chicken",
+            "value": "Chicken",
+            "count" : "2"
         },
         {
-            "name": "Ham",
-            "value" : "1"
+            "label": "Ham",
+            "value": "Ham",
+            "count" : "1"
         },
         {
-            "name": "Bacon",
-            "value" : "1"
+            "label": "Bacon",
+            "value": "Bacon",
+            "count" : "1"
         },
         {
-            "name": "Italian Sausage",
-            "value" : "1"
+            "label": "Italian Sausage",
+            "value": "Italian Sausage",
+            "count" : "1"
         },
         {
-            "name": "Beef Salami",
-            "value": "1"
+            "label": "Beef Salami",
+            "value": "Beef Salami",
+            "count": "1"
         }
     ],
     "Cheese" : [
         {
-            "name": "Mozzarella",
-            "value" : "1"
+            "label": "Mozzarella",
+            "value": "Mozzarella",
+            "count" : "1"
         },
         {
-            "name": "Cheddar",
-            "value" : "1"
+            "label": "Cheddar",
+            "value": "Cheddar",
+            "count" : "1"
         },
         {
-            "name": "Parmesan",
-            "value" : "1"
+            "label": "Parmesan",
+            "value": "Parmesan",
+            "count" : "1"
         },
         {
-            "name": "X-Cheese",
-            "value" : "1"
+            "label": "X-Cheese",
+            "value": "X-Cjeese",
+            "count" : "1"
         },
         {
-            "name": "Double Cheese",
-            "value" : "2"
+            "label": "Double Cheese",
+            "value": "Double Cheese",
+            "count" : "2"
         },      
         {
-            "name": "Feta",
-            "value" : "1"
+            "label": "Feta",
+            "value": "Feta",
+            "count" : "1"
         }         
     ],
     "Vegetable" : [
         {
-            "name": "Mushroom",
-            "value" : "1"
+            "label": "Mushroom",
+            "value": "Mushroom",
+            "count" : "1"
         },
         {
-            "name": "Green Peppers",
-            "value" : "1"
+            "label": "Green Peppers",
+            "value": "Green Peppers",
+            "count" : "1"
         },
         {
-            "name": "Green Olives",
-            "value" : "1"
+            "label": "Green Olives",
+            "value": "Green Olives",
+            "count" : "1"
         },        
         {
-            "name": "Black Olives",
-            "value" : "1"
+            "label": "Black Olives",
+            "value": "Black Olives",
+            "count" : "1"
         },  
         {
-            "name": "Hot Peppers",
-            "value" : "1"
+            "label": "Hot Peppers",
+            "value": "Hot Peppers",
+            "count" : "1"
         },    
         {
-            "name": "Red Peppers",
-            "value" : "1"
+            "label": "Red Peppers",
+            "value": "Red Peppers",
+            "count" : "1"
         },   
         {
-            "name": "Jalapenos",
-            "value" : "1"
+            "label": "Jalapenos",
+            "value": "Jalapenos",
+            "count" : "1"
         },   
         {
-            "name": "Broccoli",
-            "value" : "1"
+            "label": "Broccoli",
+            "value": "Broccoli",
+            "count" : "1"
         },   
         {
-            "name": "Onions",
-            "value" : "1"
+            "label": "Onions",
+            "value": "Onions",
+            "count" : "1"
         },   
         {
-            "name": "Pineapple",
-            "value" : "1"
+            "label": "Pineapple",
+            "value": "Pineapple",
+            "count" : "1"
         },   
         {
-            "name": "Tomatoes",
-            "value" : "1"
+            "label": "Tomatoes",
+            "value": "Tomatoes",
+            "count" : "1"
         },
         {
-            "name": "Sun Dried Tomatoes",
-            "value" : "1"
+            "label": "Sun Dried Tomatoes",
+            "value": "Sun Dried Tomatoes",
+            "count" : "1"
         }, 
         {
-            "name": "Spinach",
-            "value" : "1"
+            "label": "Spinach",
+            "value": "Spinach",
+            "count" : "1"
         }        
     ],
     "Free_Toppings" : [
         {
-            "name" : "Thin Crust",
-            "value" : "0"
+            "label" : "Thin Crust",
+            "value": "Thin Crust",
+            "count" : "0"
         },
         {
-            "name" : "Thick Crust",
-            "value" : "0"
+            "label" : "Thick Crust",
+            "value": "Thick Crust",
+            "count" : "0"
         },
         {
-            "name" : "Whole Wheat",
-            "value" : "0"
+            "label" : "Whole Wheat",
+            "value": "Whole Wheat",
+            "count" : "0"
         },
         {
-            "name" : "Extra Sauce",
-            "value" : "0"
+            "label" : "Extra Sauce",
+            "value": "Extra Sauce",
+            "count" : "0"
         },
         {
-            "name" : "Chili Pepper",
-            "value" : "0"
+            "label" : "Chili Pepper",
+            "value": "Chili Pepper",
+            "count" : "0"
         },
         {
-            "name" : "Fresh Garlic",
-            "value" : "0"
+            "label" : "Fresh Garlic",
+            "value": "Fresh Garlic",
+            "count" : "0"
         },
         {
-            "name" : "White Sauce",
-            "value" : "0"
+            "label" : "White Sauce",
+            "value": "White Sauce",
+            "count" : "0"
         },
         {
-            "name" : "Pesto Sauce",
-            "value" : "0"
+            "label" : "Pesto Sauce",
+            "value": "Pesto Sauce",
+            "count" : "0"
         }          
     ],
     "Price": [
         {
-            "name": "Medium",
-            "value": "1.5"
+            "label": "Medium",
+            "count": "1.5"
         },
         {
-            "name": "Large",
-            "value": "2"
+            "label": "Large",
+            "count": "2"
         },
         {
-            "name": "X-Large",
-            "value": "2.5"
+            "label": "X-Large",
+            "count": "2.5"
         },
         {
-            "name": "Party",
-            "value": "3.5"
+            "label": "Party",
+            "count": "3.5"
         },
         {
-            "name": "Calzone",
-            "value": "1"
+            "label": "Calzone",
+            "count": "1"
         },
         {
-            "name": "Panzo",
-            "value": "1"
+            "label": "Panzo",
+            "count": "1"
         }
     ],
     "Dip":[
         {
-            "name": "Dip",
-            "value": "0.96"
+            "label": "Dip",
+            "count": "0.96"
         }
     ],
     "Pop":[
         {
-            "name": "Pop",
-            "value": "1.5"
+            "label": "Pop",
+            "count": "1.5"
         }
     ]
 }

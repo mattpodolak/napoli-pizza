@@ -484,20 +484,47 @@
 		  	}
 		},
 		{
-			"name": "Family Deal",
-			"desc": "1 Large Pizza - 3 Toppings, 10 Wings, Garlic Bread with Cheese, 4 Pop, 2 Dip, Pasta",
-			"price": "33.99",
-			"pizzas": "1",
-			"size": "Large",
-			"toppings": "3",
+			"name": "Monster Deal",
+			"desc": "2 BIG Square Party Pizzas - 2 Toppings, 6 Pop, 6 Dip",
+			"price": "49.99",
+			"pizzas": "2",
+			"size": "Party",
+			"toppings": "2",
 			"default_toppings": null,
 			"addon":  null,
 		  	"extras": {
-				"Wings": "10",
-				"Garlic bread with cheese": "True",
-				"Pop": "4",
-				"Dip": "2",
-				"Pasta": "True",
+				"Wings": "0",
+				"Garlic bread with cheese": "False",
+				"Pop": "6",
+				"Dip": "6",
+				"Pasta": "False",
+				"Chips": "False"
+		  	}
+		},
+		{
+			"name": "Banquet Deal",
+			"desc": "4 Medium Pizzas - 2 Toppings each",
+			"price": "37.99",
+			"pizzas": "4",
+			"size": "Medium",
+			"toppings": "2",
+			"default_toppings": null,
+			"addon":  [
+				{
+					"name":"Upgrade to Large",
+					"price":"10.00"
+				},
+				{
+					"name":"Upgrade to X-Large",
+					"price":"20.00"
+				}
+			],
+		  	"extras": {
+				"Wings": "0",
+				"Garlic bread with cheese": "False",
+				"Pop": "0",
+				"Dip": "0",
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
@@ -547,9 +574,36 @@
 		  	}
 		},
 		{
+			"name": "1 Pizzas Deal",
+			"desc": "1 Medium Pizzas - 3 Toppings each, 2 Pop, 2 Dip",
+			"price": "18.99",
+			"pizzas": "1",
+			"size": "Large",
+			"toppings": "3",
+			"default_toppings": null,
+			"addon":  [
+				{
+					"name":"Upgrade to Large",
+					"price":"2.00"
+				},
+				{
+					"name":"Upgrade to X-Large",
+					"price":"5.00"
+				}
+			],
+		  	"extras": {
+				"Wings": "0",
+				"Garlic bread with cheese": null,
+				"Pop": "2",
+				"Dip": "2",
+				"Pasta": null,
+				"Chips": "False"
+		  	}
+		},
+		{
 			"name": "2 Pizzas Deal",
 			"desc": "2 Medium Pizzas - 4 Toppings each, 4 Pop, 4 Dip",
-			"price": "26.99",
+			"price": "29.99",
 			"pizzas": "2",
 			"size": "Large",
 			"toppings": "4",
@@ -890,60 +944,6 @@
 				"Garlic bread with cheese": "False",
 				"Pop": "1",
 				"Dip": "1",
-				"Pasta": "False",
-				"Chips": "False"
-		  	}
-		},
-		{
-			"name": "Two Oven Baked Sandwiches",
-			"desc": "Two Oven Baked Sandwiches",
-			"price": "20",
-			"pizzas": "0",
-			"size": null,
-			"toppings": null,
-			"default_toppings": null,
-			"addon":  null,
-		  	"extras": {
-				"Wings": "0",
-				"Garlic bread with cheese": "False",
-				"Pop": "0",
-				"Dip": "0",
-				"Pasta": "False",
-				"Chips": "False"
-		  	}
-		},
-		{
-			"name": "Light Snack Deal #1",
-			"desc": "Chicken Nuggets, Potato Wedges",
-			"price": "20",
-			"pizzas": "0",
-			"size": null,
-			"toppings": null,
-			"default_toppings": null,
-			"addon":  null,
-		  	"extras": {
-				"Wings": "0",
-				"Garlic bread with cheese": "False",
-				"Pop": "0",
-				"Dip": "0",
-				"Pasta": "False",
-				"Chips": "False"
-		  	}
-		},
-		{
-			"name": "Light Snack Deal #2",
-			"desc": "10 Chicken Wings, Potato Wedges",
-			"price": "20",
-			"pizzas": "0",
-			"size": null,
-			"toppings": null,
-			"default_toppings": null,
-			"addon":  null,
-		  	"extras": {
-				"Wings": "10",
-				"Garlic bread with cheese": "False",
-				"Pop": "0",
-				"Dip": "0",
 				"Pasta": "False",
 				"Chips": "False"
 		  	}
