@@ -60,7 +60,17 @@ export default class Menu extends React.Component {
           "Pasta": "False",
           "Chips": "False"
           }
-      }
+      },
+      pizzaToppings1: [],
+      pizzaToppings2: [],
+      pizzaToppings3: [],
+      pizzaToppings4: [],
+      addon: [],
+      pop1: 'Coke', pop2: 'Coke', pop3: 'Coke', pop4: 'Coke', pop5: 'Coke', pop6: 'Coke',
+      dip1: 'Coke', dip2: 'Coke', dip3: 'Coke', dip4: 'Coke', dip5: 'Coke', dip6: 'Coke',
+      pasta: 'Lasagna',
+      wings: 'BBQ',
+      chips: 'Lays'
     }
     state = {
       showToast: false,
@@ -75,8 +85,11 @@ export default class Menu extends React.Component {
       pizzaToppings3: [],
       pizzaToppings4: [],
       addon: [],
-      pops: [],
-      dips: []
+      pop1: 'Coke', pop2: 'Coke', pop3: 'Coke', pop4: 'Coke', pop5: 'Coke', pop6: 'Coke',
+      dip1: 'Coke', dip2: 'Coke', dip3: 'Coke', dip4: 'Coke', dip5: 'Coke', dip6: 'Coke',
+      pasta: 'Lasagna',
+      wings: 'BBQ',
+      chips: 'Lays'
     };
 
     render() {
@@ -92,8 +105,11 @@ export default class Menu extends React.Component {
         pizzaToppings3,
         pizzaToppings4,
         addon,
-        pops,
-        dips
+        pop1, pop2, pop3, pop4, pop5, pop6,
+        dip1, dip2, dip3, dip4, dip5, dip6,
+        pasta,
+        wings,
+        chips
       } = this.state;
 
       const toastMarkup = showToast ? (
@@ -553,32 +569,32 @@ export default class Menu extends React.Component {
                   Number(this.state.editItemData.extras.Pop) > 0 &&
                   <FormLayout.Group condensed>
                     <Select
-                      options={options}
-                      onChange={this.handleChange}
-                      value={this.state.selected}
+                      options={toppingData.Pops}
+                      onChange={this.pop1Update}
+                      value={this.state.pop1}
                     />
                     {
                       Number(this.state.editItemData.extras.Pop) > 1 &&
                         <Select
-                        options={options}
-                        onChange={this.handleChange}
-                        value={this.state.selected}
+                        options={toppingData.Pops}
+                        onChange={this.pop2Update}
+                        value={this.state.pop2}
                       />
                     }
                     {
                       Number(this.state.editItemData.extras.Pop) > 2 &&
                         <Select
-                        options={options}
-                        onChange={this.handleChange}
-                        value={this.state.selected}
+                        options={toppingData.Pops}
+                        onChange={this.pop3Update}
+                        value={this.state.pop3}
                       />
                     }
                     {
                       Number(this.state.editItemData.extras.Pop) > 3 &&
                         <Select
-                        options={options}
-                        onChange={this.handleChange}
-                        value={this.state.selected}
+                        options={toppingData.Pops}
+                        onChange={this.pop4Update}
+                        value={this.state.pop4}
                       />
                     }
                   </FormLayout.Group>
@@ -587,16 +603,72 @@ export default class Menu extends React.Component {
                   Number(this.state.editItemData.extras.Pop) > 4 &&
                   <FormLayout.Group condensed>
                     <Select
-                      options={options}
-                      onChange={this.handleChange}
-                      value={this.state.selected}
+                      options={toppingData.Pops}
+                      onChange={this.pop5Update}
+                      value={this.state.pop5}
                     />
                     {
                       Number(this.state.editItemData.extras.Pop) > 5 &&
                         <Select
-                        options={options}
-                        onChange={this.handleChange}
-                        value={this.state.selected}
+                        options={toppingData.Pops}
+                        onChange={this.pop6Update}
+                        value={this.state.pop6}
+                      />
+                    }
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.extras.Dip) > 0 &&
+                  <Subheading>Dips</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.extras.Dip) > 0 &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={toppingData.Dips}
+                      onChange={this.dip1Update}
+                      value={this.state.dip1}
+                    />
+                    {
+                      Number(this.state.editItemData.extras.Dip) > 1 &&
+                        <Select
+                        options={toppingData.Dips}
+                        onChange={this.dip2Update}
+                        value={this.state.dip2}
+                      />
+                    }
+                    {
+                      Number(this.state.editItemData.extras.Dip) > 2 &&
+                        <Select
+                        options={toppingData.Dips}
+                        onChange={this.dip3Update}
+                        value={this.state.dip3}
+                      />
+                    }
+                    {
+                      Number(this.state.editItemData.extras.Dip) > 3 &&
+                        <Select
+                        options={toppingData.Dips}
+                        onChange={this.dip4Update}
+                        value={this.state.dip4}
+                      />
+                    }
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.extras.Dip) > 4 &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={toppingData.Dips}
+                      onChange={this.dip5Update}
+                      value={this.state.dip5}
+                    />
+                    {
+                      Number(this.state.editItemData.extras.Dip) > 5 &&
+                        <Select
+                        options={toppingData.Dips}
+                        onChange={this.dip6Update}
+                        value={this.state.dip6}
                       />
                     }
                   </FormLayout.Group>
@@ -610,17 +682,8 @@ export default class Menu extends React.Component {
         colors: {
           topBar: {
             background: '#357997',
-          },
-        },
-        logo: {
-          width: 124,
-          topBarSource:
-            'https://cdn.shopify.com/s/files/1/0446/6937/files/jaded-pixel-logo-color.svg?6215648040070010999',
-          contextualSaveBarSource:
-            'https://cdn.shopify.com/s/files/1/0446/6937/files/jaded-pixel-logo-gray.svg?6215648040070010999',
-          url: 'http://jadedpixel.com',
-          accessibilityLabel: 'Jaded Pixel',
-        },
+          }
+        }
       };
 
       return (
@@ -671,6 +734,66 @@ export default class Menu extends React.Component {
         modalActive: true
       });
     };
+    
+    chipsUpdate = value => {
+      this.setState({ pasta: value });
+    };
+
+    pastaUpdate = value => {
+      this.setState({ pasta: value });
+    };
+
+    wingsUpdate = value => {
+      this.setState({ wings: value });
+    };
+
+    pop1Update = value => {
+      this.setState({ pop1: value });
+    };
+
+    pop2Update = value => {
+      this.setState({ pop2: value });
+    };
+
+    pop3Update = value => {
+      this.setState({ pop3: value });
+    };
+
+    pop4Update = value => {
+      this.setState({ pop4: value });
+    };
+
+    pop5Update = value => {
+      this.setState({ pop5: value });
+    };
+
+    pop6Update = value => {
+      this.setState({ pop6: value });
+    };
+
+    dip1Update = value => {
+      this.setState({ dip1: value });
+    };
+
+    dip2Update = value => {
+      this.setState({ dip2: value });
+    };
+
+    dip3Update = value => {
+      this.setState({ dip3: value });
+    };
+
+    dip4Update = value => {
+      this.setState({ dip4: value });
+    };
+
+    dip5Update = value => {
+      this.setState({ dip5: value });
+    };
+
+    dip6Update = value => {
+      this.setState({ dip6: value });
+    };
 
     pizzaToppings1 = value => {
       this.setState({ pizzaToppings1: value });
@@ -689,6 +812,6 @@ export default class Menu extends React.Component {
     };
 
     addToCart = () => {
-      console.log(this.state.pizzaToppings1)
+      console.log(this.state.pops)
     };
   }

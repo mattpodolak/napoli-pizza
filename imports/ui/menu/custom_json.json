@@ -404,7 +404,7 @@
     "pizza_deals": [
 		{
 			"name": "Mega Deal",
-			"desc": "2 Medium Pizzas - 3 Toppings each",
+			"desc": "2 Medium Pizzas - 3 Toppings each, 4 Pop, 2 Dip",
 			"price": "32.99",
 			"pizzas": "2",
 			"size": "Medium",
@@ -542,7 +542,7 @@
 				"Garlic bread with cheese": null,
 				"Pop": "2",
 				"Dip": "2",
-				"Pasta": null,
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
@@ -569,7 +569,7 @@
 				"Garlic bread with cheese": null,
 				"Pop": "0",
 				"Dip": "0",
-				"Pasta": null,
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
@@ -596,7 +596,7 @@
 				"Garlic bread with cheese": null,
 				"Pop": "2",
 				"Dip": "2",
-				"Pasta": null,
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
@@ -623,7 +623,7 @@
 				"Garlic bread with cheese": null,
 				"Pop": "4",
 				"Dip": "4",
-				"Pasta": null,
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
@@ -1097,7 +1097,7 @@
 				"Garlic bread with cheese": null,
 				"Pop": "0",
 				"Dip": "0",
-				"Pasta": null,
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
