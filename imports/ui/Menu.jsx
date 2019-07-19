@@ -65,7 +65,7 @@ export default class Menu extends React.Component {
       pizzaToppings2: [],
       pizzaToppings3: [],
       pizzaToppings4: [],
-      addon: [],
+      addonValue: 'noAddons',
       pop1: 'Coke', pop2: 'Coke', pop3: 'Coke', pop4: 'Coke', pop5: 'Coke', pop6: 'Coke',
       dip1: 'Coke', dip2: 'Coke', dip3: 'Coke', dip4: 'Coke', dip5: 'Coke', dip6: 'Coke',
       pasta: 'Lasagna',
@@ -78,13 +78,12 @@ export default class Menu extends React.Component {
       showMobileNavigation: false,
       modalActive: false,
       page: 'pizzaDeals',
-      value: 'disabled',
+      addonValue: 'noAddons',
       editItemData: this.defaultState.itemDataField,
       pizzaToppings1: [],
       pizzaToppings2: [],
       pizzaToppings3: [],
       pizzaToppings4: [],
-      addon: [],
       pop1: 'Coke', pop2: 'Coke', pop3: 'Coke', pop4: 'Coke', pop5: 'Coke', pop6: 'Coke',
       dip1: 'Coke', dip2: 'Coke', dip3: 'Coke', dip4: 'Coke', dip5: 'Coke', dip6: 'Coke',
       pasta: 'Lasagna',
@@ -104,7 +103,7 @@ export default class Menu extends React.Component {
         pizzaToppings2,
         pizzaToppings3,
         pizzaToppings4,
-        addon,
+        addonValue,
         pop1, pop2, pop3, pop4, pop5, pop6,
         dip1, dip2, dip3, dip4, dip5, dip6,
         pasta,
@@ -401,15 +400,18 @@ export default class Menu extends React.Component {
                 <Stack>
                   <RadioButton
                     label="No Addons"
-                    checked={this.state.value === 'disabled'}
+                    checked={addonValue === 'noAddons'}
                     id="noAddons"
                     name="addons"
+                    onChange={this.addonUpdate}
                   />
                   {(this.state.editItemData.addon || []).map(addon => (
                       <RadioButton
                         label={addon.name}
                         id={addon.name}
+                        checked={addonValue === addon.name}
                         name="addons"
+                        onChange={this.addonUpdate}
                       />
                     ))}
                 </Stack>
@@ -787,6 +789,26 @@ export default class Menu extends React.Component {
       });
     };
 
+    addonUpdate = (checked, newValue) => {
+      
+      var tempData = this.state.editItemData;
+      if(newValue.includes('Both') || newValue.includes('Pizza') && !this.state.addonValue.includes('Both') && !this.state.addonValue.includes('Pizza')){
+        tempData.pizzas = Number(tempData.pizzas);
+        tempData.pizzas++;
+        tempData.pizzas = String(tempData.pizzas)
+        console.log(tempData)
+        this.setState({editItemData: tempData});
+      }
+      if(!(newValue.includes('Both') || newValue.includes('Pizza')) && (this.state.addonValue.includes('Both') || this.state.addonValue.includes('Pizza') )){
+        tempData.pizzas = Number(tempData.pizzas);
+        tempData.pizzas--;
+        tempData.pizzas = String(tempData.pizzas)
+        console.log(tempData)
+        this.setState({editItemData: tempData});
+      }
+      this.setState({addonValue: newValue});
+    };
+
     chipsUpdate = value => {
       this.setState({ pasta: value });
     };
@@ -864,6 +886,6 @@ export default class Menu extends React.Component {
     };
 
     addToCart = () => {
-      console.log(this.state.pops)
+      console.log(this.state.editItemData)
     };
   }
