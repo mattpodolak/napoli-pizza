@@ -673,6 +673,58 @@ export default class Menu extends React.Component {
                     }
                   </FormLayout.Group>
                 }
+                {
+                  this.state.editItemData.extras.Pasta == 'True' &&
+                  <Subheading>Pasta</Subheading>
+                }
+                {
+                  this.state.editItemData.extras.Pasta == 'True' &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={toppingData.Pasta}
+                      onChange={this.pastaUpdate}
+                      value={this.state.pasta}
+                    />
+                  </FormLayout.Group>
+                }
+                {
+                  this.state.editItemData.name == 'Pasta Special' &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={toppingData.PastaSpecial}
+                      onChange={this.pastaUpdate}
+                      value={this.state.pasta}
+                    />
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.extras.Wings) > 0 &&
+                  <Subheading>Wings</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.extras.Wings) > 0 &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={toppingData.Wings}
+                      onChange={this.wingsUpdate}
+                      value={this.state.wings}
+                    />
+                  </FormLayout.Group>
+                }
+                {
+                  this.state.editItemData.extras.Chips == 'True' &&
+                  <Subheading>Chips</Subheading>
+                }
+                {
+                  this.state.editItemData.extras.Chips == 'True' &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={toppingData.Chips}
+                      onChange={this.chipsUpdate}
+                      value={this.state.chips}
+                    />
+                  </FormLayout.Group>
+                }
                </FormLayout> 
           </Modal.Section>
         </Modal>
@@ -734,7 +786,7 @@ export default class Menu extends React.Component {
         modalActive: true
       });
     };
-    
+
     chipsUpdate = value => {
       this.setState({ pasta: value });
     };
