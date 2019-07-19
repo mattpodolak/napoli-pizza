@@ -21,6 +21,7 @@ import {
     RadioButton,
     ChoiceList,
     Subheading,
+    Select
 } from '@shopify/polaris';
 import {    
     HomeMajorMonotone,
@@ -72,6 +73,7 @@ export default class Menu extends React.Component {
       pizzaToppings1: [],
       pizzaToppings2: [],
       pizzaToppings3: [],
+      pizzaToppings4: [],
       addon: [],
       pops: [],
       dips: []
@@ -88,6 +90,7 @@ export default class Menu extends React.Component {
         pizzaToppings1,
         pizzaToppings2,
         pizzaToppings3,
+        pizzaToppings4,
         addon,
         pops,
         dips
@@ -505,6 +508,99 @@ export default class Menu extends React.Component {
                     />
                   </FormLayout.Group>
                 }
+                {
+                  Number(this.state.editItemData.pizzas) > 3 &&
+                  <Subheading>Pizza 4 - Toppings</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.pizzas) > 3 &&
+                  <FormLayout.Group condensed>
+                    <ChoiceList
+                      allowMultiple
+                      title={'Free Toppings'}
+                      choices={toppingData.Free_Toppings}
+                      selected={pizzaToppings4}
+                      onChange={this.pizzaToppings4}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Vegetable Toppings'}
+                      choices={toppingData.Vegetable}
+                      selected={pizzaToppings4}
+                      onChange={this.pizzaToppings4}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Cheese Toppings'}
+                      choices={toppingData.Cheese}
+                      selected={pizzaToppings4}
+                      onChange={this.pizzaToppings4}
+                    />
+                    <ChoiceList
+                      allowMultiple
+                      title={'Meat Toppings'}
+                      choices={toppingData.Meat}
+                      selected={pizzaToppings4}
+                      onChange={this.pizzaToppings4}
+                    />
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.extras.Pop) > 0 &&
+                  <Subheading>Pops</Subheading>
+                }
+                {
+                  Number(this.state.editItemData.extras.Pop) > 0 &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={options}
+                      onChange={this.handleChange}
+                      value={this.state.selected}
+                    />
+                    {
+                      Number(this.state.editItemData.extras.Pop) > 1 &&
+                        <Select
+                        options={options}
+                        onChange={this.handleChange}
+                        value={this.state.selected}
+                      />
+                    }
+                    {
+                      Number(this.state.editItemData.extras.Pop) > 2 &&
+                        <Select
+                        options={options}
+                        onChange={this.handleChange}
+                        value={this.state.selected}
+                      />
+                    }
+                    {
+                      Number(this.state.editItemData.extras.Pop) > 3 &&
+                        <Select
+                        options={options}
+                        onChange={this.handleChange}
+                        value={this.state.selected}
+                      />
+                    }
+                  </FormLayout.Group>
+                }
+                {
+                  Number(this.state.editItemData.extras.Pop) > 4 &&
+                  <FormLayout.Group condensed>
+                    <Select
+                      options={options}
+                      onChange={this.handleChange}
+                      value={this.state.selected}
+                    />
+                    {
+                      Number(this.state.editItemData.extras.Pop) > 5 &&
+                        <Select
+                        options={options}
+                        onChange={this.handleChange}
+                        value={this.state.selected}
+                      />
+                    }
+                  </FormLayout.Group>
+                }
                </FormLayout> 
           </Modal.Section>
         </Modal>
@@ -586,6 +682,10 @@ export default class Menu extends React.Component {
 
     pizzaToppings3 = value => {
       this.setState({ pizzaToppings3: value });
+    };
+
+    pizzaToppings4 = value => {
+      this.setState({ pizzaToppings4: value });
     };
 
     addToCart = () => {

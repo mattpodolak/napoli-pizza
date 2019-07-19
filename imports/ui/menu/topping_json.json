@@ -198,16 +198,140 @@
             "count": "1"
         }
     ],
-    "Dip":[
+    "DipPrice":[
         {
             "label": "Dip",
             "count": "0.96"
         }
     ],
-    "Pop":[
+    "PopPrice":[
         {
             "label": "Pop",
             "count": "1.5"
+        }
+    ],
+    "Pops" : [
+        {
+            "label" : "Coke",
+            "value": "Coke"
+        },
+        {
+            "label" : "Diet Coke",
+            "value": "Diet Coke"
+        },
+        {
+            "label" : "Coke Zero",
+            "value": "Coke Zero"
+        },
+        {
+            "label" : "Sprite",
+            "value": "Sprite"
+        },
+        {
+            "label" : "Nestea",
+            "value": "Nestea"
+        },
+        {
+            "label" : "Barqs Root Beer",
+            "value": "Barqs Root Beer"
+        },
+        {
+            "label" : "Canada Dry",
+            "value": "Canada Dry"
+        },
+        {
+            "label" : "C-Plus",
+            "value": "C-Plus"
+        },
+        {
+            "label" : "Fresca",
+            "value": "Fresca"
+        },
+        {
+            "label" : "Brio",
+            "value": "Brio"
+        },
+        {
+            "label" : "Water",
+            "value": "Water"
+        }
+    ],
+    "Dips" : [
+        {
+            "label" : "Garlic",
+            "value": "Garlic"
+        },
+        {
+            "label" : "Ranch",
+            "value": "Ranch"
+        },
+        {
+            "label" : "Blue Cheese",
+            "value": "Blue Cheese"
+        },
+        {
+            "label" : "Marinara",
+            "value": "Marinara"
+        },
+        {
+            "label" : "Cheddar Chipotle",
+            "value": "Cheddar Chipotle"
+        },
+        {
+            "label" : "Spicy Buffalo",
+            "value": "Spicy Buffalo"
+        }
+    ],
+    "Pasta" : [
+        {
+            "label" : "Penne",
+            "value": "Penne"
+        },
+        {
+            "label" : "Lasagna",
+            "value": "Lasagna"
+        }
+    ],
+    "PastaSpecial" : [
+        {
+            "label" : "Penne",
+            "value": "Penne"
+        },
+        {
+            "label" : "Lasagna",
+            "value": "Lasagna"
+        },
+        {
+            "label" : "Spaghetti",
+            "value": "Spaghetti"
+        }
+    ],
+    "Wings" : [
+        {
+            "label" : "BBQ",
+            "value": "BBQ"
+        },
+        {
+            "label" : "Honey Garlic",
+            "value": "Honey Garlic"
+        },
+        {
+            "label" : "Medium",
+            "value": "Medium"
+        },
+        {
+            "label" : "Hot",
+            "value": "Hot"
+        }
+    ],
+    "Chips" : [
+        {
+            "label" : "Lays",
+            "value": "Lays"
+        },
+        {
+            "label" : "Doritos",
+            "value": "Doritos"
         }
     ]
 }
