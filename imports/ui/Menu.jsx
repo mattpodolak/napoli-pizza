@@ -61,34 +61,32 @@ export default class Menu extends React.Component {
           "Chips": "False"
           }
       },
-      pizzaToppings1: [],
-      pizzaToppings2: [],
-      pizzaToppings3: [],
-      pizzaToppings4: [],
+      pizzaToppings: [],
       addonValue: 'noAddons',
-      pop1: 'Coke', pop2: 'Coke', pop3: 'Coke', pop4: 'Coke', pop5: 'Coke', pop6: 'Coke',
-      dip1: 'Coke', dip2: 'Coke', dip3: 'Coke', dip4: 'Coke', dip5: 'Coke', dip6: 'Coke',
+      pop: 'Coke',
+      dip: 'Ranch',
       pasta: 'Lasagna',
       wings: 'BBQ',
-      chips: 'Lays'
+      chips: 'Lays',
+      page: 'pizzaDeals'
     }
     state = {
       showToast: false,
       isLoading: false,
       showMobileNavigation: false,
       modalActive: false,
-      page: 'pizzaDeals',
-      addonValue: 'noAddons',
+      page: this.defaultState.page,
+      addonValue: this.defaultState.addonValue,
       editItemData: this.defaultState.itemDataField,
-      pizzaToppings1: [],
-      pizzaToppings2: [],
-      pizzaToppings3: [],
-      pizzaToppings4: [],
-      pop1: 'Coke', pop2: 'Coke', pop3: 'Coke', pop4: 'Coke', pop5: 'Coke', pop6: 'Coke',
-      dip1: 'Coke', dip2: 'Coke', dip3: 'Coke', dip4: 'Coke', dip5: 'Coke', dip6: 'Coke',
-      pasta: 'Lasagna',
-      wings: 'BBQ',
-      chips: 'Lays'
+      pizzaToppings1: this.defaultState.pizzaToppings,
+      pizzaToppings2: this.defaultState.pizzaToppings,
+      pizzaToppings3: this.defaultState.pizzaToppings,
+      pizzaToppings4: this.defaultState.pizzaToppings,
+      pop1: this.defaultState.pop, pop2: this.defaultState.pop, pop3: this.defaultState.pop, pop4: this.defaultState.pop, pop5: this.defaultState.pop, pop6: this.defaultState.pop,
+      dip1: this.defaultState.dip, dip2: this.defaultState.dip, dip3: this.defaultState.dip, dip4: this.defaultState.dip, dip5: this.defaultState.dip, dip6: this.defaultState.dip,
+      pasta: this.defaultState.pasta,
+      wings: this.defaultState.wings,
+      chips: this.defaultState.chips
     };
 
     render() {
@@ -382,7 +380,7 @@ export default class Menu extends React.Component {
       const modalMarkup = (
         <Modal
           open={modalActive}
-          onClose={this.toggleState('modalActive')}
+          onClose={() => this.closeEditItem()}
           title={this.state.editItemData.name}
           primaryAction={{
             content: 'Add to Cart',
@@ -788,6 +786,30 @@ export default class Menu extends React.Component {
         modalActive: true
       });
     };
+
+    setDefault = () => {
+      this.setState({
+        editItemData: this.defaultState.itemDataField,
+        addonValue: this.defaultState.addonValue,
+        editItemData: this.defaultState.itemDataField,
+        pizzaToppings1: this.defaultState.pizzaToppings,
+        pizzaToppings2: this.defaultState.pizzaToppings,
+        pizzaToppings3: this.defaultState.pizzaToppings,
+        pizzaToppings4: this.defaultState.pizzaToppings,
+        pop1: this.defaultState.pop, pop2: this.defaultState.pop, pop3: this.defaultState.pop, pop4: this.defaultState.pop, pop5: this.defaultState.pop, pop6: this.defaultState.pop,
+        dip1: this.defaultState.dip, dip2: this.defaultState.dip, dip3: this.defaultState.dip, dip4: this.defaultState.dip, dip5: this.defaultState.dip, dip6: this.defaultState.dip,
+        pasta: this.defaultState.pasta,
+        wings: this.defaultState.wings,
+        chips: this.defaultState.chips
+      });
+    }
+
+    closeEditItem = () => {
+      this.setState({
+        modalActive: false
+      });
+      this.setDefault();
+    }
 
     addonUpdate = (checked, newValue) => {
       
