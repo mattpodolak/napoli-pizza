@@ -25,11 +25,14 @@ import {
 } from '@shopify/polaris';
 import {    
     HomeMajorMonotone,
-    OrdersMajorTwotone,
+    CartMajorMonotone,
     ProductsMajorTwotone,
     PageMajorMonotone
 } from '@shopify/polaris-icons';
 import React from 'react';
+
+import { withTracker } from 'meteor/react-meteor-data';
+import { Carts } from '../api/carts.js';
 
 const menuData = require('./menu/custom_json.json');
 const toppingData = require('./menu/topping_json.json');
@@ -41,7 +44,7 @@ const saladsItems = menuData.salads;
 const sidesItems = menuData.sides;
 const pitasItems = menuData.pitas;
 
-export default class Menu extends React.Component {
+export class Menu extends React.Component {
     defaultState ={
       itemDataField: {
         "name": "",
@@ -78,6 +81,7 @@ export default class Menu extends React.Component {
       page: this.defaultState.page,
       addonValue: this.defaultState.addonValue,
       editItemData: this.defaultState.itemDataField,
+      editItemCategory: 'pizza_deals',
       pizzaToppings1: this.defaultState.pizzaToppings,
       pizzaToppings2: this.defaultState.pizzaToppings,
       pizzaToppings3: this.defaultState.pizzaToppings,
@@ -86,7 +90,8 @@ export default class Menu extends React.Component {
       dip1: this.defaultState.dip, dip2: this.defaultState.dip, dip3: this.defaultState.dip, dip4: this.defaultState.dip, dip5: this.defaultState.dip, dip6: this.defaultState.dip,
       pasta: this.defaultState.pasta,
       wings: this.defaultState.wings,
-      chips: this.defaultState.chips
+      chips: this.defaultState.chips,
+      cartName: ""
     };
 
     render() {
@@ -97,6 +102,7 @@ export default class Menu extends React.Component {
         modalActive,
         page,
         editItemData,
+        editItemCategory,
         pizzaToppings1,
         pizzaToppings2,
         pizzaToppings3,
@@ -106,13 +112,15 @@ export default class Menu extends React.Component {
         dip1, dip2, dip3, dip4, dip5, dip6,
         pasta,
         wings,
-        chips
+        chips,
+        cartName
       } = this.state;
 
       const toastMarkup = showToast ? (
         <Toast
           onDismiss={this.toggleState('showToast')}
-          content="Changes saved"
+          content={"Added " + cartName + " to Cart"}
+          duration={2000}
         />
       ) : null;
 
@@ -129,9 +137,10 @@ export default class Menu extends React.Component {
           items={[
             {
                 label: 'Cart',
-                icon: OrdersMajorTwotone,
-                badge: '15',
+                icon: CartMajorMonotone,
+                badge: String(this.props.cartCount),
                 onClick: this.toggleState('isLoading'),
+                url: '/cart'
             }
           ]}
         />
@@ -384,7 +393,7 @@ export default class Menu extends React.Component {
           title={this.state.editItemData.name}
           primaryAction={{
             content: 'Add to Cart',
-            onAction: this.addToCart,
+            onAction: this.addToCart
           }}
         >
           <Modal.Section>
@@ -783,8 +792,15 @@ export default class Menu extends React.Component {
       console.log(itemDetails)
       this.setState({
         editItemData: itemDetails,
-        modalActive: true
+        modalActive: true,
+        editItemCategory: editItemCategory
       });
+
+      if(itemDetails.default_toppings != null){
+        this.setState({
+          pizzaToppings1: itemDetails.default_toppings
+        });
+      }
     };
 
     setDefault = () => {
@@ -809,6 +825,39 @@ export default class Menu extends React.Component {
         modalActive: false
       });
       this.setDefault();
+    }
+
+    addToCart = () => {
+      var name = this.state.editItemData.name;
+      var pizzaTop1 = this.state.pizzaToppings1;
+      var pizzaTop2 = this.state.pizzaToppings2;
+      var pizzaTop3 = this.state.pizzaToppings3;
+      var pizzaTop4 = this.state.pizzaToppings4;
+      var addonValue = this.state.addonValue;
+      var pop1 = this.state.pop1;
+      var pop2 = this.state.pop2;
+      var pop3 = this.state.pop3;
+      var pop4 = this.state.pop4;
+      var pop5 = this.state.pop5;
+      var pop6 = this.state.pop6;
+      
+      var dip1 = this.state.dip1;
+      var dip2 = this.state.dip2;
+      var dip3 = this.state.dip3;
+      var dip4 = this.state.dip4;
+      var dip5 = this.state.dip5;
+      var dip6 = this.state.dip6;
+
+      var pasta = this.state.pasta;
+      var wings = this.state.wings;
+      var chips = this.state.chips;
+      Meteor.call('carts.insert', name, addonValue, pizzaTop1, pizzaTop2, pizzaTop3, pizzaTop4, pop1, pop2, pop3, pop4, pop5, pop6, dip1, dip2, dip3, dip4, dip5, dip6, pasta, wings, chips);
+      console.log('Added to cart ', name)
+      this.closeEditItem();
+      this.setState({
+        cartName: name,
+        showToast: true
+      });
     }
 
     addonUpdate = (checked, newValue) => {
@@ -906,8 +955,13 @@ export default class Menu extends React.Component {
     pizzaToppings4 = value => {
       this.setState({ pizzaToppings4: value });
     };
-
-    addToCart = () => {
-      console.log(this.state.editItemData)
-    };
   }
+
+  export default withTracker(() => {
+    Meteor.subscribe('carts');
+    return {
+      cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
+      cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
+      currentUser: Meteor.user(),
+    };
+  })(Menu);
