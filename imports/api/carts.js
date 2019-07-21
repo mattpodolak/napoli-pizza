@@ -40,15 +40,15 @@ Meteor.methods({
       }
       //check(taskId, String);
       var userId = Meteor.userId()
-      Carts.remove(cartId, userId);
+      Carts.remove({_id: cartId, userId: userId});
     },
     'carts.removeAll'() {
-             // Make sure the user is logged in before inserting a task
-    //   if (! this.userId) {
-    //     throw new Meteor.Error('not-authorized');
-    //   }
-        //remove all for a userId
-        //var userId = Meteor.userId()
-        //Carts.remove(userId);
+     // Make sure the user is logged in before inserting a task
+     if (! Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+      //check(taskId, String);
+      var userId = Meteor.userId()
+      Carts.remove({userId: userId});
       },
   });

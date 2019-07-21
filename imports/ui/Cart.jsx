@@ -69,7 +69,7 @@ export class Cart extends React.Component {
       <Toast
         onDismiss={this.toggleState('showToast')}
         content={"Removed " + removeCartItem + " from Cart"}
-        duration={2000}
+        duration={1000}
       />
     ) : null;
 

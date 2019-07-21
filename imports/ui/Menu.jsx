@@ -120,7 +120,7 @@ export class Menu extends React.Component {
         <Toast
           onDismiss={this.toggleState('showToast')}
           content={"Added " + cartName + " to Cart"}
-          duration={2000}
+          duration={1000}
         />
       ) : null;
 
