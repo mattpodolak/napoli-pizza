@@ -187,5 +187,6 @@ export default withTracker(() => {
   Meteor.subscribe('carts');
   return {
     cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
+    cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count()
   };
 })(Cart);
