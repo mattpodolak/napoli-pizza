@@ -789,7 +789,7 @@ export class Menu extends React.Component {
           break;
         }
       }
-      console.log(itemDetails)
+      //console.log(itemDetails)
       this.setState({
         editItemData: itemDetails,
         modalActive: true,
@@ -829,30 +829,109 @@ export class Menu extends React.Component {
 
     addToCart = () => {
       var name = this.state.editItemData.name;
-      var pizzaTop1 = this.state.pizzaToppings1;
-      var pizzaTop2 = this.state.pizzaToppings2;
-      var pizzaTop3 = this.state.pizzaToppings3;
-      var pizzaTop4 = this.state.pizzaToppings4;
+      var num_pizzas = Number(this.state.editItemData.pizzas);
       var addonValue = this.state.addonValue;
-      var pop1 = this.state.pop1;
-      var pop2 = this.state.pop2;
-      var pop3 = this.state.pop3;
-      var pop4 = this.state.pop4;
-      var pop5 = this.state.pop5;
-      var pop6 = this.state.pop6;
-      
-      var dip1 = this.state.dip1;
-      var dip2 = this.state.dip2;
-      var dip3 = this.state.dip3;
-      var dip4 = this.state.dip4;
-      var dip5 = this.state.dip5;
-      var dip6 = this.state.dip6;
 
-      var pasta = this.state.pasta;
-      var wings = this.state.wings;
-      var chips = this.state.chips;
-      Meteor.call('carts.insert', name, addonValue, pizzaTop1, pizzaTop2, pizzaTop3, pizzaTop4, pop1, pop2, pop3, pop4, pop5, pop6, dip1, dip2, dip3, dip4, dip5, dip6, pasta, wings, chips);
-      console.log('Added to cart ', name)
+      if(addonValue.includes('Both') || addonValue.includes('Pizza')){
+        num_pizzas++;
+      }
+      var pizzaTop1 = null;
+      var pizzaTop2 = null;
+      var pizzaTop3 = null;
+      var pizzaTop4 = null;
+
+      if(num_pizzas > 0){
+        pizzaTop1 = this.state.pizzaToppings1;
+      }
+      if(num_pizzas > 1){
+        pizzaTop2 = this.state.pizzaToppings2;
+      }
+      if(num_pizzas > 2){
+        pizzaTop3 = this.state.pizzaToppings3;
+      }
+      if(num_pizzas > 3){
+        pizzaTop4 = this.state.pizzaToppings4;
+      }
+
+      var pop1 = null;
+      var pop2 = null;
+      var pop3 = null;
+      var pop4 = null;
+      var pop5 = null;
+      var pop6 = null;
+      
+      var num_pop = Number(this.state.editItemData.extras.Pop);
+      if(num_pop > 0){
+        pop1 = this.state.pop1;
+      }
+      if(num_pop > 0){
+        pop1 = this.state.pop1;
+      }
+      if(num_pop > 1){
+        pop2 = this.state.pop2;
+      }
+      if(num_pop > 2){
+        pop3 = this.state.pop3;
+      }
+      if(num_pop > 3){
+        pop4 = this.state.pop4;
+      }
+      if(num_pop > 4){
+        pop5= this.state.pop5;
+      }
+      if(num_pop > 5){
+        pop6 = this.state.pop6;
+      }
+ 
+      var dip1 = null;
+      var dip2 = null;
+      var dip3 = null;
+      var dip4 = null;
+      var dip5 = null;
+      var dip6 = null;
+
+      var num_dip = Number(this.state.editItemData.extras.Dip);
+      if(num_dip > 0){
+        dip1 = this.state.dip1;
+      }
+      if(num_dip > 0){
+        dip1 = this.state.dip1;
+      }
+      if(num_dip > 1){
+        dip2 = this.state.dip2;
+      }
+      if(num_dip > 2){
+        dip3 = this.state.dip3;
+      }
+      if(num_dip > 3){
+        dip4 = this.state.dip4;
+      }
+      if(num_dip > 4){
+        dip5= this.state.dip5;
+      }
+      if(num_dip > 5){
+        dip6 = this.state.dip6;
+      }
+
+      var category = this.state.editItemCategory;
+
+      var pasta = null;
+      if(this.state.editItemData.extras.Pasta == 'True' || name == 'Pasta Special'){
+        pasta = this.state.pasta;
+      }
+
+      var wings = null;
+      if(Number(this.state.editItemData.extras.Wings) > 0){
+        wings = this.state.wings;
+      }
+
+      var chips = null;
+      if(this.state.editItemData.extras.Chips == 'True'){
+        chips = this.state.chips;
+      }
+
+      Meteor.call('carts.insert', name, category, addonValue, pizzaTop1, pizzaTop2, pizzaTop3, pizzaTop4, pop1, pop2, pop3, pop4, pop5, pop6, dip1, dip2, dip3, dip4, dip5, dip6, pasta, wings, chips);
+      
       this.closeEditItem();
       this.setState({
         cartName: name,
@@ -867,14 +946,14 @@ export class Menu extends React.Component {
         tempData.pizzas = Number(tempData.pizzas);
         tempData.pizzas++;
         tempData.pizzas = String(tempData.pizzas)
-        console.log(tempData)
+        //console.log(tempData)
         this.setState({editItemData: tempData});
       }
       if(!(newValue.includes('Both') || newValue.includes('Pizza')) && (this.state.addonValue.includes('Both') || this.state.addonValue.includes('Pizza') )){
         tempData.pizzas = Number(tempData.pizzas);
         tempData.pizzas--;
         tempData.pizzas = String(tempData.pizzas)
-        console.log(tempData)
+        //console.log(tempData)
         this.setState({editItemData: tempData});
       }
       this.setState({addonValue: newValue});

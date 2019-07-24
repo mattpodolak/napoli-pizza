@@ -18,10 +18,16 @@ import {
     Loading,
     Button,
     Stack,
+    Badge,
     RadioButton,
     ChoiceList,
     Subheading,
-    Select
+    Heading,
+    Select,
+    EmptyState,
+    CalloutCard,
+    List,
+    TextStyle
 } from '@shopify/polaris';
 import {    
   ArrowLeftMinor
@@ -46,7 +52,11 @@ export class Cart extends React.Component {
     showToast: false,
     isLoading: false,
     showMobileNavigation: false,
-    removeCartItem: ""
+    removeCartItem: "",
+    subtotal: 0,
+    tax: 0,
+    delivery: 0,
+    total: 0
   };
 
   deleteThisItem = (itemName, itemId) => {
@@ -62,7 +72,11 @@ export class Cart extends React.Component {
       showToast,
       isLoading,
       showMobileNavigation,
-      removeCartItem
+      removeCartItem,
+      totalPrice,
+      tax,
+      delivery,
+      total
     } = this.state;
 
     const toastMarkup = showToast ? (
@@ -101,21 +115,159 @@ export class Cart extends React.Component {
       <Page title="Cart">
         <Layout>
           <Layout.Section>
-              {        
-                  this.props.cart.map((cartItem) => (
-                      <Card 
-                      title={cartItem.itemName} 
-                      sectioned
-                      actions={[
-                        {
-                          content: 'Delete', 
-                          destructive: true,
-                          onAction: () => this.deleteThisItem(cartItem.itemName, cartItem._id)
-                        },
-                        ]}>
-                      </Card>
-                  ))
+            <CalloutCard
+              title="Continue to checkout"
+              primaryAction={{
+                content: 'Checkout',
+                url: '/checkout',
+              }}
+            >
+              {
+                Meteor.call('carts.totalPrice', function(error, result){
+                  console.log(result)
+                })
               }
+              <p>Total Price: </p>
+            </CalloutCard>
+              {        
+                this.props.cart.map((cartItem) => (
+                    <Card 
+                    title={cartItem.itemName + " $" + cartItem.price} 
+                    sectioned
+                    actions={[
+                      {
+                        content: 'Delete', 
+                        destructive: true,
+                        onAction: () => this.deleteThisItem(cartItem.itemName, cartItem._id)
+                      },
+                      ]}>
+                        <TextContainer spacing="tight">
+                          {
+                            cartItem.addonValue == 'noAddons' &&
+                            <TextStyle variation="strong">No Addons</TextStyle>
+                          }
+                          {
+                            cartItem.addonValue != 'noAddons' &&
+                            <TextStyle variation="strong">{cartItem.addonValue}</TextStyle>
+                          }
+                        {
+                          cartItem.pizzaTop1 != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Pizza 1 - Toppings:</TextStyle>
+                          {
+                            cartItem.pizzaTop1.length == 0 &&
+                              <Badge>No toppings</Badge>
+                          } 
+                          {
+                          cartItem.pizzaTop1.map((topName) => (
+                            <Badge>{topName}</Badge>
+                          ))
+                          }
+                          </Stack>
+                        }
+                        {
+                          cartItem.pizzaTop2 != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Pizza 2 - Toppings:</TextStyle>
+                          {
+                            cartItem.pizzaTop2.length == 0 &&
+                              <Badge>No toppings</Badge>
+                          } 
+                          {
+                          cartItem.pizzaTop2.map((topName) => (
+                            <Badge>{topName}</Badge>
+                          ))
+                          }
+                          </Stack>
+                        }
+                        {
+                          cartItem.pizzaTop3 != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Pizza 3 - Toppings:</TextStyle>
+                          {
+                            cartItem.pizzaTop3.length == 0 &&
+                              <Badge>No toppings</Badge>
+                          } 
+                          {
+                          cartItem.pizzaTop3.map((topName) => (
+                            <Badge>{topName}</Badge>
+                          ))
+                          }
+                          </Stack>
+                        }
+                        {
+                          cartItem.pizzaTop4 != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Pizza 4 - Toppings:</TextStyle>
+                          {
+                            cartItem.pizzaTop4.length == 0 &&
+                              <Badge>No toppings</Badge>
+                          } 
+                          {
+                          cartItem.pizzaTop4.map((topName) => (
+                            <Badge>{topName}</Badge>
+                          ))
+                          }
+                          </Stack>
+                        }
+                        {
+                          cartItem.pop1 != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Pop:</TextStyle>
+                            <Badge>{cartItem.pop1}</Badge>
+                            <Badge>{cartItem.pop2}</Badge>
+                            <Badge>{cartItem.pop3}</Badge>
+                            <Badge>{cartItem.pop4}</Badge>
+                            <Badge>{cartItem.pop5}</Badge>
+                            <Badge>{cartItem.pop6}</Badge>
+                          </Stack>
+                        }
+                        {
+                          cartItem.dip1 != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Dip:</TextStyle>
+                            <Badge>{cartItem.dip1}</Badge>
+                            <Badge>{cartItem.dip2}</Badge>
+                            <Badge>{cartItem.dip3}</Badge>
+                            <Badge>{cartItem.dip4}</Badge>
+                            <Badge>{cartItem.dip5}</Badge>
+                            <Badge>{cartItem.dip6}</Badge>
+                          </Stack>
+                        }
+                        {
+                          cartItem.pasta != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Pasta:</TextStyle>
+                            <Badge>{cartItem.pasta}</Badge>
+                          </Stack>
+                        }
+                        {
+                          cartItem.wings != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Wings:</TextStyle>
+                            <Badge>{cartItem.wings}</Badge>
+                          </Stack>
+                        }
+                        {
+                          cartItem.chips != null &&
+                          <Stack alignment="center">
+                            <TextStyle variation="strong">Chips:</TextStyle>
+                            <Badge>{cartItem.chips}</Badge>
+                          </Stack>
+                        }
+                        </TextContainer>
+                    </Card>
+                ))
+              }
+              {/* {
+                this.props.cartCount == 0 &&
+                  <EmptyState
+                      heading="Your cart is empty"
+                      action={{content: 'View Menu', url: '/menu'}}
+                      image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+                  >
+                  </EmptyState>
+              } */}
             </Layout.Section>
         </Layout>
       </Page>

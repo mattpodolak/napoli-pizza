@@ -32,6 +32,7 @@ import React from 'react';
 
 import { withTracker } from 'meteor/react-meteor-data';
 import { Carts } from '../api/carts.js';
+import { Orders } from '../api/orders.js';
 
 const menuData = require('./menu/custom_json.json');
 const toppingData = require('./menu/topping_json.json');
@@ -57,7 +58,8 @@ export class Checkout extends React.Component {
     postal: '',
     instructions: '',
     paymentType: 'Cash',
-    deliveryType: 'Delivery'
+    deliveryType: 'Delivery',
+    buttonText: 'Submit Order'
   };
 
   state = {
@@ -74,7 +76,16 @@ export class Checkout extends React.Component {
     postal: this.defaultState.postal,
     instructions: this.defaultState.instructions,
     paymentType: this.defaultState.paymentType,
-    deliveryType: this.defaultState.deliveryType
+    deliveryType: this.defaultState.deliveryType,
+    buttonText: this.defaultState.buttonText,
+    sendingOrder: false,
+    firstNameError: '',
+    lastNameError: '',
+    emailError: '',
+    phoneError: '',
+    addressError: '',
+    cityError: '',
+    postalError: ''
   };
 
   render() {
@@ -92,13 +103,23 @@ export class Checkout extends React.Component {
       postal,
       instructions,
       paymentType,
-      deliveryType
+      deliveryType,
+      buttonText,
+      sendingOrder,
+      firstNameError,
+      lastNameError,
+      emailError,
+      phoneError,
+      addressError,
+      cityError,
+      postalError
     } = this.state;
 
     const toastMarkup = showToast ? (
       <Toast
+        error
         onDismiss={this.toggleState('showToast')}
-        content="Hello"
+        content="Empty Cart"
         duration={1000}
       />
     ) : null;
@@ -151,6 +172,7 @@ export class Checkout extends React.Component {
                       label="First Name"
                       type="text"
                       maxLength={50} 
+                      error={firstNameError}
                     />
                     <TextField
                       value={lastName}
@@ -158,6 +180,7 @@ export class Checkout extends React.Component {
                       label="Last Name"
                       type="text"
                       maxLength={50}
+                      error={lastNameError}
                     />
                   </FormLayout.Group>
                   <FormLayout.Group>
@@ -167,6 +190,7 @@ export class Checkout extends React.Component {
                       label="Email"
                       type="email"
                       maxLength={50} 
+                      error={emailError}
                     />
                     <TextField
                       value={phone}
@@ -174,6 +198,7 @@ export class Checkout extends React.Component {
                       label="Phone Number"
                       type="tel"
                       maxLength={11} 
+                      error={phoneError}
                     />
                   </FormLayout.Group>
                   <FormLayout.Group>
@@ -182,14 +207,15 @@ export class Checkout extends React.Component {
                         onChange={this.handleChange('addressOne')}
                         label="Address One"
                         type="text"
-                        maxLength={50} 
+                        maxLength={50}
+                        error={addressError} 
                       />
                       <TextField
                         value={addressTwo}
                         onChange={this.handleChange('addressTwo')}
                         label="Address Two"
                         type="text"
-                        maxLength={30} 
+                        maxLength={30}
                       />
                   </FormLayout.Group>
                   <FormLayout.Group>
@@ -199,13 +225,15 @@ export class Checkout extends React.Component {
                         label="City"
                         type="text"
                         maxLength={30} 
+                        error={cityError}
                       />
                       <TextField
                         value={postal}
                         onChange={this.handleChange('postal')}
                         label="Postal Code"
                         type="text"
-                        maxLength={6}
+                        maxLength={7}
+                        error={postalError}
                       />
                   </FormLayout.Group>
                   <FormLayout.Group>
@@ -231,8 +259,11 @@ export class Checkout extends React.Component {
                     />
 
                   </FormLayout.Group>
-
-                  <Button submit>Submit Order</Button>
+                    <Button primary
+                    submit
+                    loading={sendingOrder}
+                    onClick={() => this.submitOrder()}
+                    >{buttonText}</Button>
                 </FormLayout>
               </Form>
             </Layout.Section>
@@ -295,6 +326,50 @@ export class Checkout extends React.Component {
     );
   }
 
+  formValidation(){
+    var formErrors = false
+
+    var firstName = this.state.firstName.replace(" ", "")
+    var lastName = this.state.lastName.replace(" ", "")
+    var email = this.state.email.replace(" ", "")
+    var phone = this.state.phone.replace(" ", "")
+    var addressOne = this.state.addressOne.replace(" ", "")
+    var city = this.state.city.replace(" ", "")
+    var postal = this.state.postal.replace(" ", "")
+
+    if(firstName.length == 0){
+      formErrors = true
+      this.setState({ firstNameError: 'First Name Required' });
+    }
+    if(lastName.length == 0 ){
+      formErrors = true
+      this.setState({ lastNameError: 'Last Name Required' });
+    }
+    if(email.length == 0 ){
+      formErrors = true
+      this.setState({ emailError: 'Email Required' });
+    }
+    if(phone.length == 0 ){
+      formErrors = true
+      this.setState({ phoneError: 'Phone Required' });
+    }
+    if(addressOne.length == 0){
+      formErrors = true
+      this.setState({ addressError: 'Address Required' });
+    }
+    if(city.length == 0){
+      formErrors = true
+      this.setState({ cityError: 'City Required' });
+    }
+    if(postal.length == 0){
+      formErrors = true
+      this.setState({ postalError: 'Postal Code Required' });
+    }
+
+    return formErrors
+
+  }
+
   toggleState = (key) => {
     return () => {
       this.setState((prevState) => ({[key]: !prevState[key]}));
@@ -305,6 +380,67 @@ export class Checkout extends React.Component {
     this.setState({newsletter: false, email: ''});
   };
 
+  changeButton = (buttonText) => {
+    this.setState({ buttonText }); 
+  } 
+
+  submitOrder = () => {
+    if(this.props.cartCount == 0){
+      this.setState({showToast: true});
+    }
+    else if(!this.formValidation()){
+      this.setState({ sendingOrder: true }); 
+
+      var firstName = this.state.firstName
+      var lastName = this.state.lastName
+      var email = this.state.email
+      var phone = this.state.phone
+      var addressOne = this.state.addressOne
+      var addressTwo = this.state.addressTwo
+      var city = this.state.city
+      var postal = this.state.postal
+      var instructions = this.state.instructions
+      var paymentType = this.state.paymentType
+      var deliveryType = this.state.deliveryType
+
+      // let self = this;
+      // axios({
+      //     method: "POST", 
+      //     url:"/api/send", 
+      //     data: {
+      //         name: name,   
+      //         email: email,  
+      //         message: message
+      //     }
+      // }).then((response)=>{
+      //     if (response.data.msg === 'success'){
+      //         this.changeText("Message Sent");
+      //         alert("Message Sent.");
+      //         this.resetForm()
+      //     }else if(response.data.msg === 'fail'){
+      //         //alert("Message failed to send.")
+      //         this.changeText("Try Again");
+      //     }
+      //     else{
+      //       this.changeText("Try Again");
+      //     }
+      // }).catch(function (error) {
+      //   // handle error
+      //   //alert("Message failed to send.")
+      //   console.log("Mailing error: ", error);
+      //   self.changeText("Try Again");
+      // })
+
+      //insert order into DB
+      Meteor.call('orders.insert', firstName, lastName);
+      var orderId = this.props.orders[0]._id;
+      
+    }
+    else{
+      this.changeButton("Try Again");
+    }
+  };
+
   handleChange = (field) => {
     return (value) => this.setState({[field]: value});
   };
@@ -313,8 +449,10 @@ export class Checkout extends React.Component {
 
 export default withTracker(() => {
   Meteor.subscribe('carts');
+  Meteor.subscribe('orders');
   return {
     cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
     cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
+    orders: Orders.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
   };
 })(Checkout);
