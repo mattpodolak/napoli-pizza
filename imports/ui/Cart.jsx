@@ -36,6 +36,9 @@ import React from 'react';
 
 import { withTracker } from 'meteor/react-meteor-data';
 import { Carts } from '../api/carts.js';
+import { Meteor } from 'meteor/meteor';
+import { TotalPrice } from './TotalPrice.jsx'
+//import { Fiber } from 'fibers'
 
 const menuData = require('./menu/custom_json.json');
 const toppingData = require('./menu/topping_json.json');
@@ -53,10 +56,7 @@ export class Cart extends React.Component {
     isLoading: false,
     showMobileNavigation: false,
     removeCartItem: "",
-    subtotal: 0,
-    tax: 0,
-    delivery: 0,
-    total: 0
+    price: 0
   };
 
   deleteThisItem = (itemName, itemId) => {
@@ -73,10 +73,7 @@ export class Cart extends React.Component {
       isLoading,
       showMobileNavigation,
       removeCartItem,
-      totalPrice,
-      tax,
-      delivery,
-      total
+      price
     } = this.state;
 
     const toastMarkup = showToast ? (
@@ -122,12 +119,7 @@ export class Cart extends React.Component {
                 url: '/checkout',
               }}
             >
-              {
-                Meteor.call('carts.totalPrice', function(error, result){
-                  console.log(result)
-                })
-              }
-              <p>Total Price: </p>
+            <TotalPrice cart={this.props.cart} delivery="Delivery"/>
             </CalloutCard>
               {        
                 this.props.cart.map((cartItem) => (
@@ -141,7 +133,7 @@ export class Cart extends React.Component {
                         onAction: () => this.deleteThisItem(cartItem.itemName, cartItem._id)
                       },
                       ]}>
-                        <TextContainer spacing="tight">
+                        <Stack vertical={true} spacing="extraTight">
                           {
                             cartItem.addonValue == 'noAddons' &&
                             <TextStyle variation="strong">No Addons</TextStyle>
@@ -152,7 +144,7 @@ export class Cart extends React.Component {
                           }
                         {
                           cartItem.pizzaTop1 != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Pizza 1 - Toppings:</TextStyle>
                           {
                             cartItem.pizzaTop1.length == 0 &&
@@ -167,7 +159,7 @@ export class Cart extends React.Component {
                         }
                         {
                           cartItem.pizzaTop2 != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Pizza 2 - Toppings:</TextStyle>
                           {
                             cartItem.pizzaTop2.length == 0 &&
@@ -182,7 +174,7 @@ export class Cart extends React.Component {
                         }
                         {
                           cartItem.pizzaTop3 != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Pizza 3 - Toppings:</TextStyle>
                           {
                             cartItem.pizzaTop3.length == 0 &&
@@ -197,7 +189,7 @@ export class Cart extends React.Component {
                         }
                         {
                           cartItem.pizzaTop4 != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Pizza 4 - Toppings:</TextStyle>
                           {
                             cartItem.pizzaTop4.length == 0 &&
@@ -212,7 +204,7 @@ export class Cart extends React.Component {
                         }
                         {
                           cartItem.pop1 != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Pop:</TextStyle>
                             <Badge>{cartItem.pop1}</Badge>
                             <Badge>{cartItem.pop2}</Badge>
@@ -224,7 +216,7 @@ export class Cart extends React.Component {
                         }
                         {
                           cartItem.dip1 != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Dip:</TextStyle>
                             <Badge>{cartItem.dip1}</Badge>
                             <Badge>{cartItem.dip2}</Badge>
@@ -236,26 +228,26 @@ export class Cart extends React.Component {
                         }
                         {
                           cartItem.pasta != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Pasta:</TextStyle>
                             <Badge>{cartItem.pasta}</Badge>
                           </Stack>
                         }
                         {
                           cartItem.wings != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Wings:</TextStyle>
                             <Badge>{cartItem.wings}</Badge>
                           </Stack>
                         }
                         {
                           cartItem.chips != null &&
-                          <Stack alignment="center">
+                          <Stack alignment="center" spacing="tight">
                             <TextStyle variation="strong">Chips:</TextStyle>
                             <Badge>{cartItem.chips}</Badge>
                           </Stack>
                         }
-                        </TextContainer>
+                        </Stack>
                     </Card>
                 ))
               }
@@ -337,6 +329,21 @@ export class Cart extends React.Component {
 
 export default withTracker(() => {
   Meteor.subscribe('carts');
+
+  // const wrappedCartFunction = Meteor.wrapAsync(Meteor.call("carts.totalPrice"));
+
+  // const total = wrappedCartFunction();
+  // console.log(total);
+
+  // const total = new Promise((resolve, reject) => {
+  //   Meteor.call("carts.totalPrice", (error, result) => {
+  //     if (error) return reject(error);
+  //     resolve(result);
+  //   })
+  // });
+
+  //console.log(total)
+
   return {
     cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
     cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count()

@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { HTTP } from 'meteor/http'
 
 export const Carts = new Mongo.Collection('carts');
 
@@ -161,7 +162,7 @@ Meteor.methods({
       var userId = Meteor.userId()
       Carts.remove({userId: userId});
       },
-      'carts.totalPrice'() {
+      'carts.send'(orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType) {
         // Make sure the user is logged in before inserting a task
          if (! Meteor.userId()) {
            throw new Meteor.Error('not-authorized');
@@ -170,19 +171,83 @@ Meteor.methods({
          var userId = Meteor.userId()
          var cartItems = Carts.find({userId: userId}).fetch();
          var delivery = 0;
+         var subtotal = 0;
+         var cart = [];
 
          //check if any items not free deliv
          for(var i=0; i < cartItems.length; i++){
            if(cartItems[i].category != 'freedelivery'){
              delivery = 7;
-             break;
            }
+           subtotal = Number(cartItems[i].price) + subtotal;
+           cart.push(cartItems[i]);
          }
-         return {
-           "subtotal": subtotal,
-           "delivery": delivery,
-           "tax": tax,
-           "total": total
-         };
+
+         var tax = (delivery+subtotal)*0.13;
+         var total = subtotal+delivery+tax;
+
+         subtotal = subtotal.toFixed(2);
+         delivery = delivery.toFixed(2);
+         tax = tax.toFixed(2);
+         total = total.toFixed(2);
+
+         var username = Meteor.settings.user;
+         var password = Meteor.settings.pass;
+
+         try {
+          const result = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/login/', {
+            params: { 
+              username: username,
+              password: password
+            }
+          });
+
+          var auth = result.data.data.authToken;
+          var user = result.data.data.userId;
+          
+          //add customer to db
+          const result2 = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/add', {
+            headers: {
+              'X-Auth-Token': auth, 
+              'X-User-Id': user
+            },
+            params: { 
+              first_name: firstName,
+              last_name: lastName,
+              phone: phone,
+              address_one: addressOne,
+              address_two: addressTwo,
+              postal_code: postal,
+              city: city,
+              user: 'Napoli',
+            }
+          });
+          
+          //add order to db
+          const result3 = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/order2', {
+            headers: {
+              'X-Auth-Token': auth, 
+              'X-User-Id': user
+            },
+            params: { 
+              phone: phone, 
+              cart: cart, 
+              orderNum: orderNum, 
+              deliveryType: deliveryType, 
+              paymentType: paymentType,
+              instructions: instructions,
+              subtotal: subtotal, 
+              tax: tax, 
+              delivery: delivery,
+              user: 'Napoli',
+            }
+          });
+    
+          return true;
+          
+        } catch (e) {
+          // Got a network error, timeout, or HTTP error in the 400 or 500 range.
+          return false;
+        }
       },
   });

@@ -22,7 +22,8 @@ import {
     ChoiceList,
     Subheading,
     Select,
-    Form
+    Form,
+    CalloutCard
 } from '@shopify/polaris';
 import {    
   ArrowLeftMinor,
@@ -33,6 +34,9 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Carts } from '../api/carts.js';
 import { Orders } from '../api/orders.js';
+import { TotalPrice } from './TotalPrice.jsx'
+
+import uniqid from 'uniqid';
 
 const menuData = require('./menu/custom_json.json');
 const toppingData = require('./menu/topping_json.json');
@@ -163,8 +167,15 @@ export class Checkout extends React.Component {
       <Page title="Checkout">
         <Layout>
             <Layout.Section>
+              <Card
+                title="Cart Total"
+                sectioned
+              >
+                <TotalPrice cart={this.props.cart} delivery={this.state.deliveryType}/>
+              </Card>
               <Form onSubmit={this.handleSubmit}>
                 <FormLayout>
+                  <br/>
                 <FormLayout.Group>
                     <TextField
                       value={firstName}
@@ -403,38 +414,27 @@ export class Checkout extends React.Component {
       var paymentType = this.state.paymentType
       var deliveryType = this.state.deliveryType
 
-      // let self = this;
-      // axios({
-      //     method: "POST", 
-      //     url:"/api/send", 
-      //     data: {
-      //         name: name,   
-      //         email: email,  
-      //         message: message
-      //     }
-      // }).then((response)=>{
-      //     if (response.data.msg === 'success'){
-      //         this.changeText("Message Sent");
-      //         alert("Message Sent.");
-      //         this.resetForm()
-      //     }else if(response.data.msg === 'fail'){
-      //         //alert("Message failed to send.")
-      //         this.changeText("Try Again");
-      //     }
-      //     else{
-      //       this.changeText("Try Again");
-      //     }
-      // }).catch(function (error) {
-      //   // handle error
-      //   //alert("Message failed to send.")
-      //   console.log("Mailing error: ", error);
-      //   self.changeText("Try Again");
-      // })
+      let self = this;
+      var orderNum = uniqid()
 
-      //insert order into DB
-      Meteor.call('orders.insert', firstName, lastName);
-      var orderId = this.props.orders[0]._id;
-      
+      Meteor.call("carts.send", orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
+        console.log(result)
+        if (!error && result){
+          console.log(result)
+          //insert order into DB
+          Meteor.call('orders.insert', firstName, lastName, orderNum);
+          Meteor.call('carts.removeAll');
+          
+          //pass orderId to order confirm page
+          this.props.history.push('/order-confirm/'+String(orderNum))
+        }
+        else{
+          console.log(error)
+          this.setState({ sendingOrder: false }); 
+          this.changeButton("Error: Try Again");
+        }
+      });
+
     }
     else{
       this.changeButton("Try Again");

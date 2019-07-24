@@ -11,7 +11,7 @@ if (Meteor.isServer) {
   }
 
 Meteor.methods({
-    'orders.insert'(firstName, lastName) {
+    'orders.insert'(firstName, lastName, orderNum) {
       //check(text, String);
    
       // Make sure the user is logged in before inserting a task
@@ -22,6 +22,7 @@ Meteor.methods({
       Orders.insert({ 
         firstName, 
         lastName,
+        orderNum,
         userId: Meteor.userId(),
         createdAt: new Date() 
       });

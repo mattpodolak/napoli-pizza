@@ -79,7 +79,7 @@ export class OrderConfirm extends React.Component{
                       action={{content: 'Return Home', url: '/'}}
                       image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
                   >
-                    <p>{"Order Number: " + this.props.findOrder[0]._id}</p>
+                    <p>{"Order Number: " + this.props.findOrder[0].orderNum}</p>
                     <br/>
                     <p>{"Your order was placed at " + this.props.findOrder[0].createdAt.getHours() +":" + this.props.findOrder[0].createdAt.getMinutes()+ " and will be ready in approx. 30-40mins"}</p>
                   </EmptyState>
@@ -163,6 +163,6 @@ export default withTracker((props) => {
   Meteor.subscribe('orders');
   return {
     orders: Orders.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
-    findOrder: Orders.find({userId: Meteor.userId(), _id: props.match.params.id}, {sort: { createdAt: -1 }}).fetch(),
+    findOrder: Orders.find({userId: Meteor.userId(), orderNum: props.match.params.id}, {sort: { createdAt: -1 }}).fetch(),
   };
 })(OrderConfirm);
