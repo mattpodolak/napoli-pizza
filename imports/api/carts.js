@@ -59,7 +59,7 @@ Meteor.methods({
       //console.log('Base price ', total);
       
       //Check if any addons, and add price of selected
-      if(addonValue != null){
+      if(addonValue != null && addon != null){
           for(var h=0; h < addon.length; h++){
               if(addonValue.includes(addon[h].name)){
                   var addPrice = Number(addon[h].price);
@@ -89,25 +89,27 @@ Meteor.methods({
             var all_toppings = topping_compile[z]
             //add up topping values
             var topping_value = 0;
-            for(var i = 0; i < all_toppings.length; i++){
-                for(var k = 0; k < topping_data.Meat.length; k++){
-                    if(topping_data.Meat[k].label == all_toppings[i] && !default_toppings.includes(all_toppings[i])){
-                        topping_value += Number(topping_data.Meat[k].count);
-                        break;
-                    }
-                }
-                for(var k = 0; k < topping_data.Cheese.length; k++){
-                    if(topping_data.Cheese[k].label == all_toppings[i] && !default_toppings.includes(all_toppings[i])){
-                        topping_value += Number(topping_data.Cheese[k].count)
-                        break;
-                    }
-                }
-                for(var k = 0; k < topping_data.Vegetable.length; k++){
-                    if(topping_data.Vegetable[k].label == all_toppings[i] && !default_toppings.includes(all_toppings[i])){
-                        topping_value += Number(topping_data.Vegetable[k].count)
-                        break;
-                    }
-                }
+            if(all_toppings != null){
+              for(var i = 0; i < all_toppings.length; i++){
+                  for(var k = 0; k < topping_data.Meat.length; k++){
+                      if(topping_data.Meat[k].label == all_toppings[i] && !default_toppings.includes(all_toppings[i])){
+                          topping_value += Number(topping_data.Meat[k].count);
+                          break;
+                      }
+                  }
+                  for(var k = 0; k < topping_data.Cheese.length; k++){
+                      if(topping_data.Cheese[k].label == all_toppings[i] && !default_toppings.includes(all_toppings[i])){
+                          topping_value += Number(topping_data.Cheese[k].count)
+                          break;
+                      }
+                  }
+                  for(var k = 0; k < topping_data.Vegetable.length; k++){
+                      if(topping_data.Vegetable[k].label == all_toppings[i] && !default_toppings.includes(all_toppings[i])){
+                          topping_value += Number(topping_data.Vegetable[k].count)
+                          break;
+                      }
+                  }
+              }
             }
             //console.log('Topping value ', topping_value);
             //multiply topping sum by price per topping depending on size

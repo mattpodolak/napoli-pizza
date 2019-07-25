@@ -81,7 +81,8 @@ export class OrderConfirm extends React.Component{
                   >
                     <p>{"Order Number: " + this.props.findOrder[0].orderNum}</p>
                     <br/>
-                    <p>{"Your order was placed at " + this.props.findOrder[0].createdAt.getHours() +":" + this.props.findOrder[0].createdAt.getMinutes()+ " and will be ready in approx. 30-40mins"}</p>
+                    {/* <p>{"Your order was placed at " + this.props.findOrder[0].createdAt.getHours() +":" + this.props.findOrder[0].createdAt.getMinutes()+ " and will be ready in approx. 30-40mins"}</p> */}
+                    <p>{"Your order was placed at " + this.props.findOrder[0].createdAt + " and will be ready in approx. 30-40mins"}</p>
                   </EmptyState>
                 }
                 {
