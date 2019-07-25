@@ -57,6 +57,7 @@ Meteor.methods({
       //Add base price
       total += price;
       //console.log('Base price ', total);
+      //console.log(num_pizzas)
       
       //Check if any addons, and add price of selected
       if(addonValue != null && addon != null){
@@ -79,8 +80,9 @@ Meteor.methods({
           }
           if(addonValue.includes("Pizza")){
             num_pizzas++;
-        }
+          }
       }
+
       var topping_compile = [actualTop1, actualTop2, actualTop3, actualTop4];
 
       //Check num pizzas

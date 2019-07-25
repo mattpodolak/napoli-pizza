@@ -832,9 +832,9 @@ export class Menu extends React.Component {
       var num_pizzas = Number(this.state.editItemData.pizzas);
       var addonValue = this.state.addonValue;
 
-      if(addonValue.includes('Both') || addonValue.includes('Pizza')){
-        num_pizzas++;
-      }
+      // if(addonValue.includes('Both') || addonValue.includes('Pizza')){
+      //   num_pizzas++;
+      // }
       var pizzaTop1 = null;
       var pizzaTop2 = null;
       var pizzaTop3 = null;
