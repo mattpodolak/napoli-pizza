@@ -185,6 +185,10 @@ Meteor.methods({
            cart.push(cartItems[i]);
          }
 
+         if(deliveryType == 'Pickup'){
+           delivery = 0;
+         }
+
          var tax = (delivery+subtotal)*0.13;
          var total = subtotal+delivery+tax;
 
