@@ -187,6 +187,8 @@ Meteor.methods({
            cart.push(cartItems[i]);
          }
 
+         console.log(cart)
+
          if(deliveryType == 'Pickup'){
            delivery = 0;
          }
@@ -237,7 +239,7 @@ Meteor.methods({
               'X-Auth-Token': auth, 
               'X-User-Id': user
             },
-            params: { 
+            data: { 
               phone: phone, 
               cart: cart, 
               orderNum: orderNum, 
