@@ -18,7 +18,6 @@ var hist = createBrowserHistory();
 
 Meteor.startup(() => {
   ReactDOM.render(
-    <AppProvider>
       <Router history={hist}>
         <Switch>
           <Route 
@@ -31,8 +30,7 @@ Meteor.startup(() => {
           <Route exact path="/" component={Menu} />
           <Route component={MissingPage}/>
         </Switch>
-      </Router>
-    </AppProvider>,
+      </Router>,
     document.getElementById("react-target")
   );
 });

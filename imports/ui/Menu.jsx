@@ -388,6 +388,7 @@ export class Menu extends React.Component {
       }
       const modalMarkup = (
         <Modal
+          large
           open={modalActive}
           onClose={() => this.closeEditItem()}
           title={this.state.editItemData.name}
@@ -754,7 +755,7 @@ export class Menu extends React.Component {
               topBar={topBarMarkup}
               navigation={navigationMarkup}
               showMobileNavigation={showMobileNavigation}
-              onNavigationDismiss={() => this.toggleState('showMobileNavigation')}
+              onNavigationDismiss={this.toggleState('showMobileNavigation')}
             >
               {loadingMarkup}
               <PageLoad/>
