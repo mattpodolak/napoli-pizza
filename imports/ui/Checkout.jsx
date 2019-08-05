@@ -314,8 +314,16 @@ export class Checkout extends React.Component {
     const theme = {
       colors: {
         topBar: {
-          background: '#357997',
-        },
+          background: '#2c9c3e',
+        }
+      },
+      logo: {
+        width: 124,
+        topBarSource:
+        'https://i.imgur.com/27tOpx7.png',
+        //DARK  'https://i.imgur.com/cSYvwrD.png',
+        url: 'http://napolipizzeriacafe.com',
+        accessibilityLabel: 'Napoli Pizza',
       },
     };
 
