@@ -119,7 +119,7 @@ export class Cart extends React.Component {
                 url: '/checkout',
               }}
             >
-            <TotalPrice cart={this.props.cart} delivery="Delivery"/>
+            <TotalPrice cart={this.props.cart} delivery="Delivery" payment="Cash"/>
             </CalloutCard>
               {        
                 this.props.cart.map((cartItem) => (

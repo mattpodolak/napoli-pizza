@@ -42,10 +42,12 @@ import { render } from 'react-dom';
 export function TotalPrice(props){
     var cartItems = props.cart;
     var deliveryReq = props.delivery;
+    var paymentType = props.payment;
     var delivery = 0;
     var subtotal = 0;
     var tax = 0;
     var total = 0;
+    var proc_fee = 0;
 
     if(cartItems != null){
       //check if any items not free deliv
@@ -64,7 +66,10 @@ export function TotalPrice(props){
       }
 
       tax = (delivery+subtotal)*0.13;
-      total = subtotal+delivery+tax;
+      if(paymentType != 'Cash'){
+        proc_fee = 2;
+      }
+      total = subtotal+delivery+tax+proc_fee;
     }
 
 
@@ -72,6 +77,7 @@ export function TotalPrice(props){
     subtotal = subtotal.toFixed(2);
     delivery = delivery.toFixed(2);
     tax = tax.toFixed(2);
+    proc_fee = proc_fee.toFixed(2);
     total = total.toFixed(2);
 
     const prices = (
@@ -79,6 +85,7 @@ export function TotalPrice(props){
           <TextStyle variation="subdued">Subtotal: {subtotal}</TextStyle>
           <TextStyle variation="subdued">Delivery: {delivery}</TextStyle>
           <TextStyle variation="subdued">Tax: {tax}</TextStyle>
+          <TextStyle variation="subdued">Processing Fee: {proc_fee}</TextStyle>
           <TextStyle variation="strong">Total: {total}</TextStyle>
       </Stack>
     );

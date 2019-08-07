@@ -61,7 +61,7 @@ export class Checkout extends React.Component {
     city: '',
     postal: '',
     instructions: '',
-    paymentType: 'Cash',
+    paymentType: 'Debit/Credit',
     deliveryType: 'Delivery',
     buttonText: 'Submit Order'
   };
@@ -171,7 +171,7 @@ export class Checkout extends React.Component {
                 title="Cart Total"
                 sectioned
               >
-                <TotalPrice cart={this.props.cart} delivery={this.state.deliveryType}/>
+                <TotalPrice cart={this.props.cart} delivery={this.state.deliveryType} payment={this.state.paymentType}/>
               </Card>
               <Form onSubmit={this.handleSubmit}>
                 <FormLayout>
@@ -425,23 +425,38 @@ export class Checkout extends React.Component {
       let self = this;
       var orderNum = uniqid()
 
-      Meteor.call("carts.send", orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
-        console.log(result)
-        if (!error && result){
+      if(paymentType == 'Cash'){
+        Meteor.call("carts.send", orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
           console.log(result)
-          //insert order into DB
-          Meteor.call('orders.insert', firstName, lastName, orderNum);
-          Meteor.call('carts.removeAll');
-          
-          //pass orderId to order confirm page
-          this.props.history.push('/order-confirm/'+String(orderNum))
+          if (!error && result){
+            console.log(result)
+            //insert order into DB
+            Meteor.call('orders.insert', firstName, lastName, orderNum, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType);
+            Meteor.call('carts.removeAll');
+            
+            //pass orderId to order confirm page
+            this.props.history.push('/order-confirm/'+String(orderNum))
+          }
+          else{
+            console.log(error)
+            this.setState({ sendingOrder: false }); 
+            this.changeButton("Error: Try Again");
+          }
+        });
+      }
+      else{
+        //insert order into DB
+        try{
+        Meteor.call('orders.insert', firstName, lastName, orderNum, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType);
+        this.props.history.push('/payment')
         }
-        else{
-          console.log(error)
+        catch(e){
+          console.log(e)
           this.setState({ sendingOrder: false }); 
           this.changeButton("Error: Try Again");
         }
-      });
+        
+      }
 
     }
     else{

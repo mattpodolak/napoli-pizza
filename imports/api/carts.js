@@ -176,6 +176,7 @@ Meteor.methods({
          var cartItems = Carts.find({userId: userId}).fetch();
          var delivery = 0;
          var subtotal = 0;
+         var proc_fee = 0;
          var cart = [];
 
          //check if any items not free deliv
@@ -192,9 +193,12 @@ Meteor.methods({
          if(deliveryType == 'Pickup'){
            delivery = 0;
          }
+         if(paymentType != 'Cash'){
+           proc_fee = 2;
+         }
 
          var tax = (delivery+subtotal)*0.13;
-         var total = subtotal+delivery+tax;
+         var total = subtotal+delivery+tax+proc_fee;
 
          subtotal = subtotal.toFixed(2);
          delivery = delivery.toFixed(2);
@@ -214,6 +218,125 @@ Meteor.methods({
 
           var auth = result.data.data.authToken;
           var user = result.data.data.userId;
+          
+          //add customer to db
+          const result2 = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/add', {
+            headers: {
+              'X-Auth-Token': auth, 
+              'X-User-Id': user
+            },
+            params: { 
+              first_name: firstName,
+              last_name: lastName,
+              phone: phone,
+              address_one: addressOne,
+              address_two: addressTwo,
+              postal_code: postal,
+              city: city,
+              user: 'Napoli',
+            }
+          });
+          
+          //add order to db
+          const result3 = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/order2', {
+            headers: {
+              'X-Auth-Token': auth, 
+              'X-User-Id': user
+            },
+            data: { 
+              phone: phone, 
+              cart: cart, 
+              orderNum: orderNum, 
+              deliveryType: deliveryType, 
+              paymentType: paymentType,
+              instructions: instructions,
+              subtotal: subtotal, 
+              tax: tax, 
+              delivery: delivery,
+              user: 'Napoli',
+            }
+          });
+    
+          return true;
+          
+        } catch (e) {
+          // Got a network error, timeout, or HTTP error in the 400 or 500 range.
+          return false;
+        }
+      },
+      'carts.sendpayment'(token, orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType) {
+        // Make sure the user is logged in before inserting a task
+         if (! Meteor.userId()) {
+           throw new Meteor.Error('not-authorized');
+         }
+         //check(taskId, String);
+         var userId = Meteor.userId()
+         var cartItems = Carts.find({userId: userId}).fetch();
+         var delivery = 0;
+         var subtotal = 0;
+         var proc_fee = 0;
+         var cart = [];
+
+         //check if any items not free deliv
+         for(var i=0; i < cartItems.length; i++){
+           if(cartItems[i].category != 'freedelivery'){
+             delivery = 7;
+           }
+           subtotal = Number(cartItems[i].price) + subtotal;
+           cart.push(cartItems[i]);
+         }
+
+         console.log(cart)
+
+         if(deliveryType == 'Pickup'){
+           delivery = 0;
+         }
+         if(paymentType != 'Cash'){
+           proc_fee = 2;
+         }
+
+         var tax = (delivery+subtotal)*0.13;
+         var total = subtotal+delivery+tax+proc_fee;
+
+         subtotal = subtotal.toFixed(2);
+         delivery = delivery.toFixed(2);
+         tax = tax.toFixed(2);
+         total = total.toFixed(2);
+
+         totalcents = Number(total)*100;
+         console.log('stripe total', totalcents)
+
+         var username = Meteor.settings.user;
+         var password = Meteor.settings.pass;
+
+         try {
+          const result = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/login/', {
+            params: { 
+              username: username,
+              password: password
+            }
+          });
+
+          var auth = result.data.data.authToken;
+          var user = result.data.data.userId;
+
+          //send customer payment
+          const result12 = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/pay', {
+            headers: {
+              'X-Auth-Token': auth, 
+              'X-User-Id': user
+            },
+            data: { 
+              source_token: token.id,
+              total: totalcents
+            }
+          });
+
+          //console.log(result12)
+
+          if (result12.data.charge.status != "succeeded"){
+            return false
+          }
           
           //add customer to db
           const result2 = HTTP.call('POST', 'https://pizza-admin.herokuapp.com/api/add', {
