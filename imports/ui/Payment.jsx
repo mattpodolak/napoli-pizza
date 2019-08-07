@@ -70,7 +70,7 @@ export default class Payment extends React.Component {
             showMobileNavigation={showMobileNavigation}
             onNavigationDismiss={this.toggleState('showMobileNavigation')}
           >
-          <StripeProvider apiKey="pk_test_FW8fA0M8MCwmpz3DSUMRUQ2d00rCab6uUw">
+          <StripeProvider apiKey="pk_live_ng1k2lsZWrGZJ8dzL5pRsWKY00BrNOVLPi">
             <Elements>
               <CheckoutForm/>
             </Elements>
