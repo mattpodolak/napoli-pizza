@@ -82,6 +82,7 @@ export class Checkout extends React.Component {
     postal: this.defaultState.postal,
     instructions: this.defaultState.instructions,
     paymentType: this.defaultState.paymentType,
+    paymentType2: this.defaultState.paymentType,
     deliveryType: this.defaultState.deliveryType,
     buttonText: this.defaultState.buttonText,
     sendingOrder: false,
@@ -91,7 +92,9 @@ export class Checkout extends React.Component {
     phoneError: '',
     addressError: '',
     cityError: '',
-    postalError: ''
+    postalError: '',
+    paymentOptions: ['Debit/Credit'],
+    paymentOptions2: ['Debit/Credit', 'Cash']
   };
 
   render() {
@@ -109,6 +112,7 @@ export class Checkout extends React.Component {
       postal,
       instructions,
       paymentType,
+      paymentType2,
       deliveryType,
       buttonText,
       sendingOrder,
@@ -173,7 +177,14 @@ export class Checkout extends React.Component {
                 title="Cart Total"
                 sectioned
               >
-                <TotalPrice cart={this.props.cart} delivery={this.state.deliveryType} payment={this.state.paymentType}/>
+                {
+                  this.state.deliveryType == 'Delivery' &&
+                  <TotalPrice cart={this.props.cart} delivery={this.state.deliveryType} payment={this.state.paymentType}/>
+                }
+                {
+                  this.state.deliveryType == 'Pickup' &&
+                  <TotalPrice cart={this.props.cart} delivery={this.state.deliveryType} payment={this.state.paymentType2}/>
+                }
               </Card>
               <Form onSubmit={this.handleSubmit}>
                 <FormLayout>
@@ -265,11 +276,22 @@ export class Checkout extends React.Component {
                       onChange={this.handleChange('deliveryType')}
                       value={deliveryType}
                     />
-                    <Select
-                      options={paymentOptions}
-                      onChange={this.handleChange('paymentType')}
-                      value={paymentType}
-                    />
+                    {
+                      this.state.deliveryType == 'Delivery' &&
+                        <Select
+                        options={this.state.paymentOptions}
+                        onChange={this.handleChange('paymentType')}
+                        value={paymentType}
+                      />
+                    }
+                    {
+                      this.state.deliveryType == 'Pickup' &&
+                        <Select
+                        options={this.state.paymentOptions2}
+                        onChange={this.handleChange('paymentType2')}
+                        value={paymentType2}
+                      />
+                    }
 
                   </FormLayout.Group>
                     <Button primary
@@ -450,8 +472,14 @@ export class Checkout extends React.Component {
         var city = this.state.city
         var postal = this.state.postal
         var instructions = this.state.instructions
-        var paymentType = this.state.paymentType
         var deliveryType = this.state.deliveryType
+
+        if(deliveryType == 'Delivery'){
+          var paymentType = this.state.paymentType
+        }
+        else{
+          var paymentType = this.state.paymentType2
+        }
 
         let self = this;
         var orderNum = uniqid()
