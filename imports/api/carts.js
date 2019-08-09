@@ -332,7 +332,7 @@ Meteor.methods({
             }
           });
 
-          //console.log(result12)
+          console.log(result12)
 
           if (result12.data.charge.status != "succeeded"){
             return false
