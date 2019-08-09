@@ -3,6 +3,8 @@ import {
     Navigation, 
     TopBar,
     Frame,
+    Page,
+    DisplayText
 } from '@shopify/polaris';
 import {    
   ArrowLeftMinor,
@@ -11,6 +13,7 @@ import React from 'react';
 
 import {Elements, StripeProvider} from 'react-stripe-elements';
 import CheckoutForm from './CheckoutForm';
+import * as utils from './scripts/utils.js';
 
 export default class Payment extends React.Component {
   state = {
@@ -60,6 +63,24 @@ export default class Payment extends React.Component {
         accessibilityLabel: 'Napoli Pizza',
       },
     };
+
+    if(!utils.checkTime()) return (
+      <div style={{height: '500px'}}>
+      <AppProvider theme={theme}>
+        <Frame
+          topBar={topBarMarkup}
+          navigation={navigationMarkup}
+          showMobileNavigation={showMobileNavigation}
+          onNavigationDismiss={this.toggleState('showMobileNavigation')}
+        >
+          <Page title="Checkout">
+            <DisplayText size="small">The store is currently closed.</DisplayText>
+          </Page>
+        </Frame>
+      </AppProvider>
+    </div>
+
+    );
 
     return (
       <div style={{height: '500px'}}>

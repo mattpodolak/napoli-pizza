@@ -1,0 +1,32 @@
+{
+    "mon": {
+        "close": 1,
+        "open": 11
+    },
+    "tues": {
+        "close": 1,
+        "open": 11
+    },
+    "wed": {
+        "close": 1,
+        "open": 11
+    },
+    "thurs": {
+        "close": 1,
+        "open": 11
+    },
+    "fri": {
+        "close": 1,
+        "open": 11
+    },
+    "sat": {
+        "close": 1,
+        "open": 11
+    },
+    "sun": {
+        "close": 1,
+        "open": 11
+    },
+    "open": false,
+    "closed": false
+}

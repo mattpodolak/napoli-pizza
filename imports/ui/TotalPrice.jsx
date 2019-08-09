@@ -80,6 +80,11 @@ export function TotalPrice(props){
     proc_fee = proc_fee.toFixed(2);
     total = total.toFixed(2);
 
+    var message = ""
+    if(subtotal < 10){
+      message = "Minimum Order of 10$ Required"
+    }
+
     const prices = (
       <Stack vertical={true} spacing="extraTight">
           <TextStyle variation="subdued">Subtotal: {subtotal}</TextStyle>
@@ -87,6 +92,7 @@ export function TotalPrice(props){
           <TextStyle variation="subdued">Tax: {tax}</TextStyle>
           <TextStyle variation="subdued">Processing Fee: {proc_fee}</TextStyle>
           <TextStyle variation="strong">Total: {total}</TextStyle>
+          <TextStyle variation="strong">{message}</TextStyle>
       </Stack>
     );
         return prices;

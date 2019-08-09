@@ -23,7 +23,8 @@ import {
     Subheading,
     Select,
     Form,
-    CalloutCard
+    CalloutCard,
+    DisplayText
 } from '@shopify/polaris';
 import {    
   ArrowLeftMinor,
@@ -48,7 +49,8 @@ const saladsItems = menuData.salads;
 const sidesItems = menuData.sides;
 const pitasItems = menuData.pitas;
 const deliveryOptions = ['Delivery', 'Pickup'];
-const paymentOptions = ['Cash', 'Debit/Credit']
+const paymentOptions = ['Cash', 'Debit/Credit'];
+import * as utils from './scripts/utils.js';
 
 export class Checkout extends React.Component {
   defaultState = {
@@ -327,6 +329,24 @@ export class Checkout extends React.Component {
       },
     };
 
+    if(!utils.checkTime()) return (
+      <div style={{height: '500px'}}>
+      <AppProvider theme={theme}>
+        <Frame
+          topBar={topBarMarkup}
+          navigation={navigationMarkup}
+          showMobileNavigation={showMobileNavigation}
+          onNavigationDismiss={this.toggleState('showMobileNavigation')}
+        >
+          <Page title="Checkout">
+            <DisplayText size="small">The store is currently closed.</DisplayText>
+          </Page>
+        </Frame>
+      </AppProvider>
+    </div>
+
+    );
+
     return (
       <div style={{height: '500px'}}>
         <AppProvider theme={theme}>
@@ -408,54 +428,66 @@ export class Checkout extends React.Component {
       this.setState({showToast: true});
     }
     else if(!this.formValidation()){
-      this.setState({ sendingOrder: true }); 
 
-      var firstName = this.state.firstName
-      var lastName = this.state.lastName
-      var email = this.state.email
-      var phone = this.state.phone
-      var addressOne = this.state.addressOne
-      var addressTwo = this.state.addressTwo
-      var city = this.state.city
-      var postal = this.state.postal
-      var instructions = this.state.instructions
-      var paymentType = this.state.paymentType
-      var deliveryType = this.state.deliveryType
+      var subtotal = 0;
+      //check if any items not free deliv
+      for(var i=0; i < this.props.cartCount; i++){
+        subtotal = Number(this.props.cart[i].price) + subtotal;
+      }
+      if(subtotal < 10){
+        this.changeButton("Error: 10$ Minimum");
+      }
+      else{
 
-      let self = this;
-      var orderNum = uniqid()
+        this.setState({ sendingOrder: true }); 
 
-      if(paymentType == 'Cash'){
-        Meteor.call("carts.send", orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
-          console.log(result)
-          if (!error && result){
+        var firstName = this.state.firstName
+        var lastName = this.state.lastName
+        var email = this.state.email
+        var phone = this.state.phone
+        var addressOne = this.state.addressOne
+        var addressTwo = this.state.addressTwo
+        var city = this.state.city
+        var postal = this.state.postal
+        var instructions = this.state.instructions
+        var paymentType = this.state.paymentType
+        var deliveryType = this.state.deliveryType
+
+        let self = this;
+        var orderNum = uniqid()
+
+        if(paymentType == 'Cash'){
+          Meteor.call("carts.send", orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
             console.log(result)
-            //insert order into DB
-            Meteor.call('orders.insert', firstName, lastName, orderNum, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType);
-            Meteor.call('carts.removeAll');
-            
-            //pass orderId to order confirm page
-            this.props.history.push('/order-confirm/'+String(orderNum))
+            if (!error && result){
+              console.log(result)
+              //insert order into DB
+              Meteor.call('orders.insert', firstName, lastName, orderNum, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType);
+              Meteor.call('carts.removeAll');
+              
+              //pass orderId to order confirm page
+              this.props.history.push('/order-confirm/'+String(orderNum))
+            }
+            else{
+              console.log(error)
+              this.setState({ sendingOrder: false }); 
+              this.changeButton("Error: Try Again");
+            }
+          });
+        }
+        else{
+          //insert order into DB
+          try{
+          Meteor.call('orders.insert', firstName, lastName, orderNum, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType);
+          this.props.history.push('/payment')
           }
-          else{
-            console.log(error)
+          catch(e){
+            console.log(e)
             this.setState({ sendingOrder: false }); 
             this.changeButton("Error: Try Again");
           }
-        });
-      }
-      else{
-        //insert order into DB
-        try{
-        Meteor.call('orders.insert', firstName, lastName, orderNum, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType);
-        this.props.history.push('/payment')
+          
         }
-        catch(e){
-          console.log(e)
-          this.setState({ sendingOrder: false }); 
-          this.changeButton("Error: Try Again");
-        }
-        
       }
 
     }

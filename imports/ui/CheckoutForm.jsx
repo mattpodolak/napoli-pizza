@@ -37,60 +37,72 @@ class CheckoutForm extends Component {
 
   submit = (ev) => {
     if(this.props.cartCount > 0){
-        this.setState({pending: true, buttonText: 'Sending'});
-    
-        try{
-             
-            var orderNum = this.props.orders[0].orderNum;
-            var firstName = this.props.orders[0].firstName;
-            var lastName = this.props.orders[0].lastName;
-            var email = this.props.orders[0].email;
-            var phone = this.props.orders[0].phone;
-            var addressOne = this.props.orders[0].addressOne;
-            var addressTwo = this.props.orders[0].addressTwo;
-            var city = this.props.orders[0].city;
-            var postal = this.props.orders[0].postal;
-            var instructions = this.props.orders[0].instructions;
-            var paymentType = this.props.orders[0].paymentType;
-            var deliveryType = this.props.orders[0].deliveryType;
 
-            var name = String(firstName) + ' ' + String(lastName)
-
-            let self = this;
-
-            this.props.stripe.createToken({address_country: 'CA', name: name}).then(result => {
-                // Handle result.error or result.token
-                console.log(result)
-                if(result.error){
-                    console.log('error', result.error);
-                    throw new Error (result.error);
-                }
-                else{
-                    const token = result.token;
-                    Meteor.call("carts.sendpayment", token, orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
-                        console.log(result)
-                        if (!error && result){
-                        console.log(result)
-                        //insert order into DB
-                        Meteor.call('carts.removeAll');
-
-                        //pass orderId to order confirm page
-                        self.setState({orderNum: orderNum});
-                        }
-                        else{
-                            console.log('Failed to send payment');
-                            self.setState({pending: false, buttonText: 'Error: Try Again'});
-                        }
-                    });
-                }
-            }).catch(e => {
-                console.log('Payment Token Error: ', e)
-                this.setState({pending: false, buttonText: 'Error: Try Again'});
-            });
+        var subtotal = 0;
+        //check if any items not free deliv
+        for(var i=0; i < this.props.cartCount; i++){
+          subtotal = Number(this.props.cart[i].price) + subtotal;
         }
-        catch(e){
-            console.log('CheckoutForm Error: ', e);
-            this.setState({pending: false, buttonText: 'Error: Try Again'});
+        if(subtotal < 10){
+            this.setState({buttonText: 'Error: 10$ Minimum'});
+        }
+        else{
+
+            this.setState({pending: true, buttonText: 'Sending'});
+        
+            try{
+                
+                var orderNum = this.props.orders[0].orderNum;
+                var firstName = this.props.orders[0].firstName;
+                var lastName = this.props.orders[0].lastName;
+                var email = this.props.orders[0].email;
+                var phone = this.props.orders[0].phone;
+                var addressOne = this.props.orders[0].addressOne;
+                var addressTwo = this.props.orders[0].addressTwo;
+                var city = this.props.orders[0].city;
+                var postal = this.props.orders[0].postal;
+                var instructions = this.props.orders[0].instructions;
+                var paymentType = this.props.orders[0].paymentType;
+                var deliveryType = this.props.orders[0].deliveryType;
+
+                var name = String(firstName) + ' ' + String(lastName)
+
+                let self = this;
+
+                this.props.stripe.createToken({address_country: 'CA', name: name}).then(result => {
+                    // Handle result.error or result.token
+                    console.log(result)
+                    if(result.error){
+                        console.log('error', result.error);
+                        throw new Error (result.error);
+                    }
+                    else{
+                        const token = result.token;
+                        Meteor.call("carts.sendpayment", token, orderNum, firstName, lastName, email, phone, addressOne, addressTwo, city, postal, instructions, paymentType, deliveryType, (error, result) => {
+                            console.log(result)
+                            if (!error && result){
+                            console.log(result)
+                            //insert order into DB
+                            Meteor.call('carts.removeAll');
+
+                            //pass orderId to order confirm page
+                            self.setState({orderNum: orderNum});
+                            }
+                            else{
+                                console.log('Failed to send payment');
+                                self.setState({pending: false, buttonText: 'Error: Try Again'});
+                            }
+                        });
+                    }
+                }).catch(e => {
+                    console.log('Payment Token Error: ', e)
+                    this.setState({pending: false, buttonText: 'Error: Try Again'});
+                });
+            }
+            catch(e){
+                console.log('CheckoutForm Error: ', e);
+                this.setState({pending: false, buttonText: 'Error: Try Again'});
+            }
         }
     }
   }
