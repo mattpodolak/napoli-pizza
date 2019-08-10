@@ -234,6 +234,7 @@ Meteor.methods({
               postal_code: postal,
               city: city,
               user: 'Napoli',
+              userId: Meteor.userId()
             }
           });
           
@@ -254,6 +255,7 @@ Meteor.methods({
               tax: tax, 
               delivery: delivery,
               user: 'Napoli',
+              userId: Meteor.userId()
             }
           });
     
