@@ -3,7 +3,7 @@
 		{
 			"name": "Spinach Pizza",
 			"desc": "Mozzarella, Feta, Spinach, White Sauce",
-			"price": "10.95",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -30,7 +30,7 @@
 		{
 			"name": "Meat Lovers Pizza",
 			"desc": "Pepperoni, Bacon, Italian Sausage, Ham",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -61,7 +61,7 @@
 		{
 			"name": "Plain Cheese Pizza",
 			"desc": "Mozzarella",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -92,7 +92,7 @@
 		{
 			"name": "Deluxe Pizza",
 			"desc": "Pepperoni, Mushrooms, Green Peppers, Onions, Bacon",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -123,7 +123,7 @@
 		{
 			"name": "Mexican Pizza",
 			"desc": "Hot Peppers, Chicken, Onions, Jalapenos",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -155,7 +155,7 @@
 		{
 			"name": "Greek Pizza",
 			"desc": "Red Peppers, Chicken, Onions, Black Olives, White Sauce",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -186,7 +186,7 @@
 		{
 			"name": "Vegetarian Pizza",
 			"desc": "Mushrooms, Green Peppers, Onions, Tomatoes",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -217,7 +217,7 @@
 		{
 			"name": "Canadian Pizza",
 			"desc": "Pepperoni, Bacon, Mushrooms, Black Olives",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -248,7 +248,7 @@
 		{
 			"name": "Hawaiian Pizza",
 			"desc": "Ham, Pineapple, Bacon, Onions",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -279,7 +279,7 @@
 		{
 			"name": "Mediterranean Pizza",
 			"desc": "Sun Dried Tomatoes, Black Olives, Feta, Onions, Green Olives",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -310,7 +310,7 @@
 		{
 			"name": "Garden Pizza",
 			"desc": "Broccoli, Spinach, Feta, Tomatoes, White Sauce",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -340,11 +340,11 @@
 		},
 		{
 			"name": "Napoli Special Pesto Pizza",
-			"desc": "Pesto Sauce, Chicken",
-			"price": "12.99",
+			"desc": "Pesto Sauce, Chicken, and 2 Veggie Toppings",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
-			"toppings": "0",
+			"toppings": "2",
 			"default_toppings": ["Pesto Sauce", "Chicken"],
 			"addon":  [
 				{
@@ -372,7 +372,7 @@
 		{
 			"name": "Ultra Meat Lovers Pizza",
 			"desc": "Beef Salami, Italian Sausage, Tomatoes, Hot Peppers, Black Olives",
-			"price": "12.99",
+			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
@@ -405,14 +405,14 @@
 		{
 			"name": "Mega Deal",
 			"desc": "2 Medium Pizzas - 3 Toppings each, 4 Pop, 2 Dip, Pasta, 10 Wings, Garlic Bread w/ Cheese",
-			"price": "32.99",
+			"price": "33.99",
 			"pizzas": "2",
 			"size": "Medium",
 			"toppings": "3",
 			"default_toppings": null,
 			"addon":  [{
 				"name":"Upgrade to Large",
-				"price":"2.00"
+				"price":"3.00"
 			}],
 		  	"extras": {
 				"Wings": "10",
@@ -424,30 +424,9 @@
 		  	}
 		},
 		{
-			"name": "Large Pepperoni",
-			"desc": "Walk-In Special - 1 Large Pepperoni Pizza",
-			"price": "10.99",
-			"pizzas": "1",
-			"size": "Large",
-			"toppings": "1",
-			"default_toppings": ["Pepperoni"],
-			"addon":  [{
-				"name":"Upgrade to Large",
-				"price":"2.00"
-			}],
-		 	"extras": {
-				"Wings": "0",
-				"Garlic bread with cheese": null,
-				"Pop": "0",
-				"Dip": "0",
-				"Pasta": "False",
-				"Chips": "False"
-		  	}
-		},
-		{
 			"name": "Supreme Special",
 			"desc": "1 Large Pizza - 3 Toppings, 10 Wings, Garlic Bread with Cheese, 4 Pop, 2 Dip",
-			"price": "24.99",
+			"price": "25.99",
 			"pizzas": "1",
 			"size": "Large",
 			"toppings": "3",
@@ -467,8 +446,8 @@
 		},
 		{
 			"name": "X-Large Deal",
-			"desc": "1 X-Large Pizza - 3 Toppings, 3 Pop, 2 Dip",
-			"price": "18.99",
+			"desc": "1 X-Large Pizza - 3 Toppings, 2 Pop, 2 Dip",
+			"price": "21.99",
 			"pizzas": "1",
 			"size": "X-Large",
 			"toppings": "3",
@@ -477,7 +456,7 @@
 		  	"extras": {
 				"Wings": "0",
 				"Garlic bread with cheese": null,
-				"Pop": "3",
+				"Pop": "2",
 				"Dip": "2",
 				"Pasta": "False",
 				"Chips": "False"
@@ -531,7 +510,7 @@
 		{
 			"name": "Party Deal",
 			"desc": "1 BIG Square Party Pizza - 1 Topping, 2 Pop, 2 Dip",
-			"price": "22.99",
+			"price": "25.99",
 			"pizzas": "1",
 			"size": "Party",
 			"toppings": "1",
@@ -549,7 +528,7 @@
 		{
 			"name": "Triple Deal",
 			"desc": "3 Medium Pizzas - 3 Toppings each",
-			"price": "32.99",
+			"price": "34.99",
 			"pizzas": "3",
 			"size": "Large",
 			"toppings": "3",
@@ -574,8 +553,8 @@
 		  	}
 		},
 		{
-			"name": "1 Pizzas Deal",
-			"desc": "1 Medium Pizzas - 3 Toppings each, 2 Pop, 2 Dip",
+			"name": "1 Pizza Deal",
+			"desc": "1 Medium Pizza - 3 Toppings each, 2 Pop, 2 Dip",
 			"price": "18.99",
 			"pizzas": "1",
 			"size": "Large",
@@ -628,12 +607,61 @@
 		  	}
 		},
 		{
-			"name": "1 Panzo, 1 Pop",
-			"desc": "1 Panzo, 1 Pop, 1 Dip",
-			"price": "10.99",
+			"name": "Basic Pizza",
+			"desc": "1 Medium Pizza with Sauce and Cheese",
+			"price": "9.99",
+			"pizzas": "1",
+			"size": "Medium",
+			"toppings": "0",
+			"default_toppings": null,
+			"addon":  [
+				{
+					"name":"Upgrade to Large",
+					"price":"1.00"
+				},
+				{
+					"name":"Upgrade to X-Large",
+					"price":"3.00"
+				},
+				{
+					"name":"Upgrade to Party",
+					"price":"8.00"
+				}
+			],
+		  	"extras": {
+				"Wings": "0",
+				"Garlic bread with cheese": "False",
+				"Pop": "0",
+				"Dip": "0",
+				"Pasta": "False",
+				"Chips": "False"
+		  	}
+		},
+		{
+			"name": "Basic Panzo",
+			"desc": "1 Panzo with Sauce and Cheese",
+			"price": "9.99",
 			"pizzas": "1",
 			"size": "Panzo",
-			"toppings": null,
+			"toppings": "0",
+			"default_toppings": null,
+			"addon":  null,
+		  	"extras": {
+				"Wings": "0",
+				"Garlic bread with cheese": "False",
+				"Pop": "0",
+				"Dip": "0",
+				"Pasta": "False",
+				"Chips": "False"
+		  	}
+		},
+		{
+			"name": "1 Panzo, 1 Pop",
+			"desc": "1 Panzo with 3 Toppings, 1 Pop, 1 Dip",
+			"price": "11.99",
+			"pizzas": "1",
+			"size": "Panzo",
+			"toppings": "3",
 			"default_toppings": null,
 			"addon":  null,
 		  	"extras": {
@@ -647,11 +675,11 @@
 		},
 		{
 			"name": "2 Panzo, 2 Pop",
-			"desc": "2 Panzo, 2 Pop, 2 Dip",
-			"price": "21.99",
+			"desc": "2 Panzos with 3 Toppings each, 2 Pop, 2 Dip",
+			"price": "23.99",
 			"pizzas": "2",
 			"size": "Panzo",
-			"toppings": null,
+			"toppings": "3",
 			"default_toppings": null,
 			"addon":  null,
 		  	"extras": {
@@ -667,8 +695,8 @@
 	"wingsandsandwiches" : [
 		{
 			"name": "10 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot",
-			"price": "8.99",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"price": "10.99",
 			"pizzas": "0",
 			"size": "10",
 			"toppings": null,
@@ -685,8 +713,8 @@
 		},
 		{
 			"name": "20 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot",
-			"price": "15.99",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"price": "18.99",
 			"pizzas": "0",
 			"size": "20",
 			"toppings": null,
@@ -702,9 +730,27 @@
 		  	}
 		},
 		{
+			"name": "30 Wings",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"price": "27.99",
+			"pizzas": "0",
+			"size": "30",
+			"toppings": null,
+			"default_toppings": null,
+			"addon":  null,
+		  	"extras": {
+				"Wings": "30",
+				"Garlic bread with cheese": "False",
+				"Pop": "0",
+				"Dip": "0",
+				"Pasta": "False",
+				"Chips": "False"
+		  	}
+		},
+		{
 			"name": "40 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot",
-			"price": "30.99",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"price": "36.99",
 			"pizzas": "0",
 			"size": "40",
 			"toppings": null,
@@ -720,9 +766,9 @@
 		  	}
 		},
 		{
-			"name": "Steak Sub",
-			"desc": "Steak Sub",
-			"price": "6.49",
+			"name": "Salami Sub",
+			"desc": "Salami Sub",
+			"price": "8.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -740,7 +786,7 @@
 		{
 			"name": "Pizza Sub",
 			"desc": "Pizza Sub",
-			"price": "6.49",
+			"price": "6.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -758,7 +804,7 @@
 		{
 			"name": "Meatball Sub",
 			"desc": "Meatball Sub",
-			"price": "6.49",
+			"price": "8.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -776,7 +822,7 @@
 		{
 			"name": "Chicken Sub",
 			"desc": "Chicken Sub",
-			"price": "6.49",
+			"price": "8.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -794,7 +840,7 @@
 		{
 			"name": "Veggie Sub",
 			"desc": "Veggie Sub",
-			"price": "6.49",
+			"price": "6.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -814,9 +860,36 @@
 		{
 			"name": "Large Pizza",
 			"desc": "Large Pizza - Second Pizza for 1/2 Price, 1 Topping, 1 Pop",
-			"price": "20",
+			"price": "22.50",
 			"pizzas": "1",
 			"size": "Large",
+			"toppings": "1",
+			"default_toppings": null,
+			"addon":  [
+				{
+					"name": "Second Pizza for 1/2 Price",
+					"price":"11"
+				},
+				{
+					"name": "Upgrade to X-Large",
+					"price": "3"
+				}
+			],
+		  	"extras": {
+				"Wings": "0",
+				"Garlic bread with cheese": "False",
+				"Pop": "1",
+				"Dip": "0",
+				"Pasta": "False",
+				"Chips": "False"
+		  	}
+		},
+		{
+			"name": "Medium Pizza",
+			"desc": "Medium Pizza - Second Pizza for 1/2 Price, 1 Topping, 1 Pop",
+			"price": "19.50",
+			"pizzas": "1",
+			"size": "Medium",
 			"toppings": "1",
 			"default_toppings": null,
 			"addon":  [{
@@ -833,61 +906,9 @@
 		  	}
 		},
 		{
-			"name": "Medium Pizza",
-			"desc": "Medium Pizza - Second Pizza for 1/2 Price, 2 Toppings, 1 Pop",
-			"price": "20",
-			"pizzas": "1",
-			"size": "Medium",
-			"toppings": "2",
-			"default_toppings": null,
-			"addon":  [{
-				"name": "Second Pizza for 1/2 Price",
-				"price":"10"
-			}],
-		  	"extras": {
-				"Wings": "0",
-				"Garlic bread with cheese": "False",
-				"Pop": "1",
-				"Dip": "0",
-				"Pasta": "False",
-				"Chips": "False"
-		  	}
-		},
-		{
-			"name": "Pizza & Wings Party",
-			"desc": "Large Pizza, 2 Toppings, 10 Wings",
-			"price": "27.50",
-			"pizzas": "1",
-			"size": "Large",
-			"toppings": "2",
-			"default_toppings": null,
-			"addon":  [
-				{
-					"name": "Second Pizza for 1/2 Price",
-					"price":"10"
-				},
-				{
-					"name": "10 Extra Wings",
-					"price":"9"
-				},
-				{
-					"name": "Both",
-					"price":"19"
-				}
-			],
-		  	"extras": {
-				"Wings": "10",
-				"Garlic bread with cheese": "False",
-				"Pop": "0",
-				"Dip": "0",
-				"Pasta": "False",
-				"Chips": "False"
-		  	}
-		},
-		{
 			"name": "40 Wings Party",
-			"desc": "40 Wings - Add 10 extra for $9",
-			"price": "37.50",
+			"desc": "40 Wings - Add 10 extra for $10",
+			"price": "42.50",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -895,7 +916,7 @@
 			"addon":  [
 				{
 					"name": "10 Extra Wings",
-					"price":"9"
+					"price":"10"
 				}
 			],
 		  	"extras": {
@@ -909,8 +930,8 @@
 		},
 		{
 			"name": "20 Wings Party",
-			"desc": "20 Wings - Add 10 Extra for $9",
-			"price": "27.50",
+			"desc": "20 Wings - Add 10 Extra for $10",
+			"price": "25.50",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -918,7 +939,7 @@
 			"addon":  [
 				{
 					"name" : "10 Extra Wings",
-					"price" : "9"
+					"price" : "10"
 				}
 			],
 		  	"extras": {
@@ -933,7 +954,7 @@
 		{
 			"name": "Calzone",
 			"desc": "Calzone with 3 Toppings, 1 Pop, and 1 Dip",
-			"price": "20",
+			"price": "22.50",
 			"pizzas": "1",
 			"size": "Calzone",
 			"toppings": "3",
@@ -952,6 +973,24 @@
 	"pitas" : [
 		{
 			"name": "Chicken Club Pita",
+			"desc": "Pita, 1 Pop, 1 Dip, Chips",
+			"price": "8.99",
+			"pizzas": "0",
+			"size": null,
+			"toppings": null,
+			"default_toppings": null,
+			"addon":  null,
+		  	"extras": {
+				"Wings": "0",
+				"Garlic bread with cheese": "False",
+				"Pop": "1",
+				"Dip": "1",
+				"Pasta": "False",
+				"Chips": "True"
+		  	}
+		},
+		{
+			"name": "Salami Pita",
 			"desc": "Pita, 1 Pop, 1 Dip, Chips",
 			"price": "8.99",
 			"pizzas": "0",
@@ -1081,7 +1120,7 @@
 		{
 			"name": "Pasta Special",
 			"desc": "Single - with Garlic Bread",
-			"price": "8.99",
+			"price": "9.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": "0",
@@ -1104,7 +1143,7 @@
 		{
 			"name": "Potato Wedges",
 			"desc": "Potato Wedges",
-			"price": "5.99",
+			"price": "7.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -1122,7 +1161,7 @@
 		{
 			"name": "Bread Sticks",
 			"desc": "Bread Sticks",
-			"price": "5.99",
+			"price": "7.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -1140,14 +1179,14 @@
 		{
 			"name": "Garlic Bread",
 			"desc": "Garlic Bread",
-			"price": "2.25",
+			"price": "3.45",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
 			"default_toppings": null,
 			"addon":  [{
 				"name": "with Cheese",
-				"price": "1.50"
+				"price": "1.00"
 			}],
 		  	"extras": {
 				"Wings": "0",
@@ -1181,7 +1220,7 @@
 		{
 			"name": "Caesar Salad",
 			"desc": "Caesar Salad",
-			"price": "6.45",
+			"price": "7.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -1199,7 +1238,7 @@
 		{
 			"name": "Chicken Caesar Salad",
 			"desc": "Chicken Caesar Salad",
-			"price": "7.45",
+			"price": "9.45",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,
@@ -1217,7 +1256,7 @@
 		{
 			"name": "Greek Salad",
 			"desc": "Greek Salad",
-			"price": "6.45",
+			"price": "7.99",
 			"pizzas": "0",
 			"size": null,
 			"toppings": null,

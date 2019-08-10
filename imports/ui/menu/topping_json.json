@@ -175,27 +175,27 @@
     "Price": [
         {
             "label": "Medium",
-            "count": "1.5"
+            "count": "1.6"
         },
         {
             "label": "Large",
-            "count": "2"
+            "count": "2.3"
         },
         {
             "label": "X-Large",
-            "count": "2.5"
+            "count": "3"
         },
         {
             "label": "Party",
-            "count": "3.5"
+            "count": "3.8"
         },
         {
             "label": "Calzone",
-            "count": "1"
+            "count": "1.6"
         },
         {
             "label": "Panzo",
-            "count": "1"
+            "count": "1.6"
         }
     ],
     "DipPrice":[
@@ -322,6 +322,10 @@
         {
             "label" : "Hot",
             "value": "Hot"
+        },
+        {
+            "label" : "Ranch",
+            "value": "Ranch"
         }
     ],
     "Chips" : [
