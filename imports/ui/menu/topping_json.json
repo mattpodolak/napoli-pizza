@@ -142,11 +142,6 @@
             "count" : "0"
         },
         {
-            "label" : "Whole Wheat",
-            "value": "Whole Wheat",
-            "count" : "0"
-        },
-        {
             "label" : "Extra Sauce",
             "value": "Extra Sauce",
             "count" : "0"
@@ -324,8 +319,8 @@
             "value": "Hot"
         },
         {
-            "label" : "Ranch",
-            "value": "Ranch"
+            "label" : "Plain",
+            "value": "Plain"
         }
     ],
     "Chips" : [

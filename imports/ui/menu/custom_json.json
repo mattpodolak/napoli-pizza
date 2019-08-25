@@ -404,7 +404,7 @@
     "pizza_deals": [
 		{
 			"name": "Mega Deal",
-			"desc": "2 Medium Pizzas - 3 Toppings each, 4 Pop, 2 Dip, Pasta, 10 Wings, Garlic Bread w/ Cheese",
+			"desc": "2 Medium Pizzas - 3 Toppings each, 4 Pop, 2 Dip, Pasta, 10 Wings, Garlic Bread",
 			"price": "33.99",
 			"pizzas": "2",
 			"size": "Medium",
@@ -419,13 +419,13 @@
 				"Garlic bread with cheese": "True",
 				"Pop": "4",
 				"Dip": "2",
-				"Pasta": "True",
+				"Pasta": "False",
 				"Chips": "False"
 		  	}
 		},
 		{
 			"name": "Supreme Special",
-			"desc": "1 Large Pizza - 3 Toppings, 10 Wings, Garlic Bread with Cheese, 4 Pop, 2 Dip",
+			"desc": "1 Large Pizza - 3 Toppings, 10 Wings, Garlic Bread, 4 Pop, 2 Dip",
 			"price": "25.99",
 			"pizzas": "1",
 			"size": "Large",
@@ -695,7 +695,7 @@
 	"wingsandsandwiches" : [
 		{
 			"name": "10 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Plain",
 			"price": "10.99",
 			"pizzas": "0",
 			"size": "10",
@@ -713,7 +713,7 @@
 		},
 		{
 			"name": "20 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Plain",
 			"price": "18.99",
 			"pizzas": "0",
 			"size": "20",
@@ -731,7 +731,7 @@
 		},
 		{
 			"name": "30 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Plain",
 			"price": "27.99",
 			"pizzas": "0",
 			"size": "30",
@@ -749,7 +749,7 @@
 		},
 		{
 			"name": "40 Wings",
-			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Ranch",
+			"desc": "Wings - BBQ, Honey Garlic, Medium, Hot, Plain",
 			"price": "36.99",
 			"pizzas": "0",
 			"size": "40",
