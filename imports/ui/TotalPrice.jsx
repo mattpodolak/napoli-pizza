@@ -39,6 +39,8 @@ import { Carts } from '../api/carts.js';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 
+import Typography from '@material-ui/core/Typography';
+
 export function TotalPrice(props){
     var cartItems = props.cart;
     var deliveryReq = props.delivery;
@@ -87,12 +89,12 @@ export function TotalPrice(props){
 
     const prices = (
       <Stack vertical={true} spacing="extraTight">
-          <TextStyle variation="subdued">Subtotal: {subtotal}</TextStyle>
-          <TextStyle variation="subdued">Delivery: {delivery}</TextStyle>
-          <TextStyle variation="subdued">Tax: {tax}</TextStyle>
-          <TextStyle variation="subdued">Processing Fee: {proc_fee}</TextStyle>
-          <TextStyle variation="strong">Total: {total}</TextStyle>
-          <TextStyle variation="strong">{message}</TextStyle>
+          <Typography variant="h6" > Subtotal: {subtotal}</Typography>
+          <Typography variant="h6" >Delivery: {delivery}</Typography>
+          <Typography variant="h6" >Tax: {tax}</Typography>
+          <Typography variant="h6" gutterBottom>Processing Fee: {proc_fee}</Typography>
+          <Typography variant="h5" >Total: {total}</Typography>
+          <Typography variant="h5" >{message}</Typography>
       </Stack>
     );
         return prices;

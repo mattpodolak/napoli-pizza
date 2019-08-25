@@ -39,6 +39,31 @@ import { TotalPrice } from './TotalPrice.jsx'
 
 import uniqid from 'uniqid';
 
+import { compose} from 'redux';
+
+import { Link } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+
+import clsx from 'clsx';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 const menuData = require('./menu/custom_json.json');
 const toppingData = require('./menu/topping_json.json');
 const pizzaDealsItems = menuData.pizza_deals;
@@ -51,6 +76,77 @@ const pitasItems = menuData.pitas;
 const deliveryOptions = ['Delivery', 'Pickup'];
 const paymentOptions = ['Cash', 'Debit/Credit'];
 import * as utils from './scripts/utils.js';
+
+const drawerWidth = 240;
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    background: '#2c9c3e',
+    zIndex: 100,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  theme: {
+    direction: theme.direction
+  },
+});
 
 export class Checkout extends React.Component {
   defaultState = {
@@ -94,10 +190,12 @@ export class Checkout extends React.Component {
     cityError: '',
     postalError: '',
     paymentOptions: ['Debit/Credit'],
-    paymentOptions2: ['Debit/Credit', 'Cash']
+    paymentOptions2: ['Debit/Credit', 'Cash'],
+    open: false
   };
 
   render() {
+    const { classes } = this.props;
     const {
       showToast,
       isLoading,
@@ -122,7 +220,8 @@ export class Checkout extends React.Component {
       phoneError,
       addressError,
       cityError,
-      postalError
+      postalError,
+      open
     } = this.state;
 
     const toastMarkup = showToast ? (
@@ -195,6 +294,7 @@ export class Checkout extends React.Component {
                       onChange={this.handleChange('firstName')}
                       label="First Name"
                       type="text"
+                      name="fname"
                       maxLength={50} 
                       error={firstNameError}
                     />
@@ -203,6 +303,7 @@ export class Checkout extends React.Component {
                       onChange={this.handleChange('lastName')}
                       label="Last Name"
                       type="text"
+                      name="lname"
                       maxLength={50}
                       error={lastNameError}
                     />
@@ -255,6 +356,7 @@ export class Checkout extends React.Component {
                         value={postal}
                         onChange={this.handleChange('postal')}
                         label="Postal Code"
+                        name="postal"
                         type="text"
                         maxLength={7}
                         error={postalError}
@@ -372,19 +474,85 @@ export class Checkout extends React.Component {
     return (
       <div style={{height: '500px'}}>
         <AppProvider theme={theme}>
-          <Frame
-            topBar={topBarMarkup}
-            navigation={navigationMarkup}
-            showMobileNavigation={showMobileNavigation}
-            onNavigationDismiss={this.toggleState('showMobileNavigation')}
-          >
+          <Frame>
+          <div className={classes.root}>
+                <CssBaseline />
+                <AppBar
+                  position="fixed"
+                  className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                  })}
+                >
+                  <Toolbar>
+                    <IconButton
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={this.handleDrawerOpen}
+                      edge="start"
+                      className={clsx(classes.menuButton, open && classes.hide)}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h4" noWrap>
+                      Napoli Pizza
+                    </Typography>
+                  </Toolbar>
+                </AppBar>
+                <Drawer
+                  className={classes.drawer}
+                  variant="persistent"
+                  anchor="left"
+                  open={open}
+                  classes={{
+                    paper: classes.drawerPaper,
+                  }}
+                >
+                  <div className={classes.drawerHeader}>
+                    <IconButton onClick={this.handleDrawerClose}>
+                      {classes.theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                  </div>
+                  <Divider /> 
+                  <List>
+                    <ListItem button onClick={this.toggleState('isLoading')} component={Link} to="/menu">
+                      <ListItemIcon><ArrowBackIcon /></ListItemIcon>
+                      <ListItemText primary="Back to Menu"/>
+                    </ListItem>
+                  </List>
+                  <Divider />
+                  <List>
+                    <ListItem button onClick={this.toggleState('isLoading')} component={Link} to="/cart">
+                      <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
+                      <ListItemText primary="Cart" secondary={String(this.props.cartCount) + " item(s)"}/>
+                    </ListItem>
+                  </List>
+                </Drawer>
+                <main
+                  className={clsx(classes.content, {
+                    [classes.contentShift]: open,
+                  })}
+                >
+                  <div className={classes.drawerHeader} />
             {loadingMarkup}
             {pageMarkup}
             {toastMarkup}
+            </main>
+            </div>
           </Frame>
         </AppProvider>
       </div>
     );
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({
+      open: true
+    });
+  }
+  handleDrawerClose = () => {
+    this.setState({
+      open: false
+    });
   }
 
   formValidation(){
@@ -530,12 +698,19 @@ export class Checkout extends React.Component {
 
 }
 
-export default withTracker(() => {
-  Meteor.subscribe('carts');
-  Meteor.subscribe('orders');
-  return {
-    cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
-    cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
-    orders: Orders.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
-  };
-})(Checkout);
+Checkout.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default compose(
+  withStyles(styles, { withTheme: true }),
+  withTracker((props) => {
+    Meteor.subscribe('carts');
+    Meteor.subscribe('orders');
+    return {
+      cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
+      cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
+      orders: Orders.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
+    };
+})
+)(Checkout);

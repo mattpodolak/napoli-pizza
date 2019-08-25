@@ -111,28 +111,6 @@ class CheckoutForm extends Component {
     
     if(this.state.orderNum != null) return <Redirect to={'/order-confirm/'+this.state.orderNum}/>
 
-    const topBarMarkup = (
-        <TopBar
-          showNavigationToggle={true}
-          onNavigationToggle={this.toggleState('showMobileNavigation')}
-        />
-      );
-  
-      const navigationMarkup = (
-        <Navigation location="/">
-          <Navigation.Section
-            items={[
-              {
-                label: 'Back to Cart',
-                icon: ArrowLeftMinor,
-                url: '/cart',
-                onClick: this.toggleState('isLoading'),
-              },
-            ]}
-          />
-        </Navigation>
-      );
-
     const theme = {
         colors: {
           topBar: {

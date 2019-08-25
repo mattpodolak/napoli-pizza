@@ -21,7 +21,9 @@ import {
     RadioButton,
     ChoiceList,
     Subheading,
-    Select
+    Select,
+    TextStyle,
+    DisplayText
 } from '@shopify/polaris';
 import {    
     HomeMajorMonotone,
@@ -31,8 +33,41 @@ import {
 } from '@shopify/polaris-icons';
 import React from 'react';
 
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import { compose} from 'redux';
+
+import { Link } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+
+import clsx from 'clsx';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PeopleIcon from '@material-ui/icons/People';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
+
 import { withTracker } from 'meteor/react-meteor-data';
 import { Carts } from '../api/carts.js';
+
+//import Button as MaterialButton from '@material-ui/core/Button';
 
 const menuData = require('./menu/custom_json.json');
 const toppingData = require('./menu/topping_json.json');
@@ -43,6 +78,77 @@ const wingsAndSandwichesItems = menuData.wingsandsandwiches;
 const saladsItems = menuData.salads;
 const sidesItems = menuData.sides;
 const pitasItems = menuData.pitas;
+
+const drawerWidth = 240;
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    background: '#2c9c3e',
+    zIndex: 100,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  theme: {
+    direction: theme.direction
+  },
+});
 
 export class Menu extends React.Component {
     defaultState ={
@@ -91,10 +197,12 @@ export class Menu extends React.Component {
       pasta: this.defaultState.pasta,
       wings: this.defaultState.wings,
       chips: this.defaultState.chips,
-      cartName: ""
+      cartName: "",
+      open: false
     };
 
     render() {
+      const { classes } = this.props;
       const {
         showToast,
         isLoading,
@@ -113,7 +221,8 @@ export class Menu extends React.Component {
         pasta,
         wings,
         chips,
-        cartName
+        cartName,
+        open
       } = this.state;
 
       const toastMarkup = showToast ? (
@@ -124,69 +233,6 @@ export class Menu extends React.Component {
         />
       ) : null;
 
-      const topBarMarkup = (
-        <TopBar
-          showNavigationToggle={true}
-          onNavigationToggle={this.toggleState('showMobileNavigation')}
-        />
-      );
-
-      const navigationMarkup = (
-        <Navigation location="/">
-        <Navigation.Section
-          items={[
-            {
-                label: 'Cart',
-                icon: CartMajorMonotone,
-                badge: String(this.props.cartCount),
-                onClick: this.toggleState('isLoading'),
-                url: '/cart'
-            }
-          ]}
-        />
-        <Navigation.Section
-            separator
-            title="Napoli Pizza Menu"
-          items={[
-            {
-              label: 'Pizza Deals',
-              icon: HomeMajorMonotone,
-              onClick: () => this.changePage('pizzaDeals')
-            },
-            {
-              label: 'Free Delivery',
-              icon: ProductsMajorTwotone,
-              onClick: () => this.changePage('freeDelivery')
-            },
-            {
-                label: 'Specialty Pizza',
-                icon: ProductsMajorTwotone,
-                onClick: () => this.changePage('specialtyPizza')
-            },
-            {
-                label: 'Wings and Sandwiches',
-                icon: ProductsMajorTwotone,
-                onClick: () => this.changePage('wingsAndSandwiches')
-            },
-            {
-                label: 'Pitas',
-                icon: ProductsMajorTwotone,
-                onClick: () => this.changePage('pitas')
-            },
-            {
-                label: 'Salads',
-                icon: ProductsMajorTwotone,
-                onClick: () => this.changePage('salads')
-            },
-            {
-                label: 'Sides',
-                icon: ProductsMajorTwotone,
-                onClick: () => this.changePage('sides')
-            },
-          ]}
-        />
-      </Navigation>
-      );
       const loadingMarkup = isLoading ? <Loading /> : null;
 
       const sidesPage = (
@@ -196,7 +242,7 @@ export class Menu extends React.Component {
                 {        
                     sidesItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'sides')}
@@ -216,7 +262,7 @@ export class Menu extends React.Component {
                 {        
                     saladsItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'salads')}
@@ -236,7 +282,7 @@ export class Menu extends React.Component {
                 {        
                     pitasItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'pitas')}
@@ -256,7 +302,7 @@ export class Menu extends React.Component {
                 {        
                     wingsAndSandwichesItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'wingsandsandwiches')}
@@ -276,7 +322,7 @@ export class Menu extends React.Component {
                 {        
                     specialtyPizzaItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'specialty')}
@@ -296,7 +342,7 @@ export class Menu extends React.Component {
                 {        
                     pizzaDealsItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'pizza_deals')}
@@ -315,7 +361,7 @@ export class Menu extends React.Component {
                 {        
                     freeDeliveryItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <p>{item.desc}</p>
+                            <DisplayText size="small">{item.desc}</DisplayText>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'freedelivery')}
@@ -400,9 +446,9 @@ export class Menu extends React.Component {
           <Modal.Section>
               <FormLayout>
               <TextContainer>
-                <p>
+                <Typography variant="h5" gutterBottom>
                   {this.state.editItemData.desc}
-                </p>
+                </Typography>
               </TextContainer>
                 <Subheading>Addons</Subheading>
                 <Stack>
@@ -759,20 +805,110 @@ export class Menu extends React.Component {
       return (
         <div style={{height: '500px'}}>
           <AppProvider theme={theme}>
-            <Frame
-              topBar={topBarMarkup}
-              navigation={navigationMarkup}
-              showMobileNavigation={showMobileNavigation}
-              onNavigationDismiss={this.toggleState('showMobileNavigation')}
-            >
-              {loadingMarkup}
-              <PageLoad/>
-              {toastMarkup}
-              {modalMarkup}
+            <Frame>
+              <div className={classes.root}>
+                <CssBaseline />
+                <AppBar
+                  position="fixed"
+                  className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                  })}
+                >
+                  <Toolbar>
+                    <IconButton
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={this.handleDrawerOpen}
+                      edge="start"
+                      className={clsx(classes.menuButton, open && classes.hide)}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h4" noWrap>
+                      Napoli Pizza
+                    </Typography>
+                  </Toolbar>
+                </AppBar>
+                <Drawer
+                  className={classes.drawer}
+                  variant="persistent"
+                  anchor="left"
+                  open={open}
+                  classes={{
+                    paper: classes.drawerPaper,
+                  }}
+                >
+                  <div className={classes.drawerHeader}>
+                    <IconButton onClick={this.handleDrawerClose}>
+                      {classes.theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                  </div>
+                  <Divider /> 
+                  <List>
+                    <ListItem button onClick={this.toggleState('isLoading')} component={Link} to="/cart">
+                      <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
+                      <ListItemText primary="Cart" secondary={String(this.props.cartCount) + " item(s)"}/>
+                    </ListItem>
+                  </List>
+                  <Divider />
+                  <List>
+                    <ListItem button onClick={() => this.changePage('pizzaDeals')}>
+                      <ListItemIcon><HomeIcon /></ListItemIcon>
+                      <ListItemText primary="Pizza Deals" />
+                    </ListItem>
+                    <ListItem button onClick={() => this.changePage('freeDelivery')}>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Free Delivery" />
+                    </ListItem>
+                    <ListItem button onClick={() => this.changePage('specialtyPizza')}>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Specialty Pizza" />
+                    </ListItem>
+                    <ListItem button onClick={() => this.changePage('wingsAndSandwiches')}>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Wings and Sandwiches" />
+                    </ListItem>
+                    <ListItem button onClick={() => this.changePage('pitas')}>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Pitas" />
+                    </ListItem>
+                    <ListItem button onClick={() => this.changePage('salads')}>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Salads" />
+                    </ListItem>
+                    <ListItem button onClick={() => this.changePage('sides')}>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Sides" />
+                    </ListItem>
+                  </List>
+                </Drawer>
+                <main
+                  className={clsx(classes.content, {
+                    [classes.contentShift]: open,
+                  })}
+                >
+                  <div className={classes.drawerHeader} />
+                  {loadingMarkup}
+                  <PageLoad/>
+                  {toastMarkup}
+                  {modalMarkup}
+                </main>
+              </div>
             </Frame>
           </AppProvider>
         </div>
       );
+    }
+
+    handleDrawerOpen = () => {
+      this.setState({
+        open: true
+      });
+    }
+    handleDrawerClose = () => {
+      this.setState({
+        open: false
+      });
     }
 
     toggleState = (key) => {
@@ -784,7 +920,8 @@ export class Menu extends React.Component {
     changePage = (page) => {
         this.toggleState('isLoading');
         this.setState({
-            page
+            page: page,
+            open: false
         });
         this.toggleState('isLoading'); 
     };
@@ -1045,11 +1182,18 @@ export class Menu extends React.Component {
     };
   }
 
-  export default withTracker(() => {
-    Meteor.subscribe('carts');
-    return {
-      cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
-      cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
-      currentUser: Meteor.user(),
-    };
-  })(Menu);
+  Menu.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+
+  export default compose(
+    withStyles(styles, { withTheme: true }),
+    withTracker((props) => {
+      Meteor.subscribe('carts');
+      return {
+        cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
+        cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
+        currentUser: Meteor.user(),
+      };
+    })
+  )(Menu)
