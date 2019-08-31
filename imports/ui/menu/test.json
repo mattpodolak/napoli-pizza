@@ -1,0 +1,21 @@
+{
+    "menu":[
+        {
+            "category-name": "Pizza Deals",
+            "category-items": [
+                {
+                    "item-name": "Mega Deal",
+                    "item-desc": "Description",
+                    "price": "12.99",
+                    "sections": [
+                        {
+                            "section-name": "Pizza 1 Toppings",
+                            "section-selection": "5",
+                            "section-options": "toppings"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

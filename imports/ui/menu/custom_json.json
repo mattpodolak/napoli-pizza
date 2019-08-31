@@ -404,7 +404,7 @@
     "pizza_deals": [
 		{
 			"name": "Mega Deal",
-			"desc": "2 Medium Pizzas - 3 Toppings each, 4 Pop, 2 Dip, Pasta, 10 Wings, Garlic Bread",
+			"desc": "2 Medium Pizzas - 3 Toppings each, 4 Pop, 2 Dip, 10 Wings, Garlic Bread",
 			"price": "33.99",
 			"pizzas": "2",
 			"size": "Medium",
