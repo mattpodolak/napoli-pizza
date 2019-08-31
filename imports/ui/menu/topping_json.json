@@ -274,14 +274,14 @@
     ],
     "Pasta" : [
         {
-            "label" : "Spaghetti",
-            "value": "Spaghetti"
+            "label" : "Lasagna",
+            "value": "Lasagna"
         }
     ],
     "PastaSpecial" : [
         {
-            "label" : "Spaghetti",
-            "value": "Spaghetti"
+            "label" : "Lasagna",
+            "value": "Lasagna"
         }
     ],
     "Wings" : [
