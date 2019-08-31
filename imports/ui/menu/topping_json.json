@@ -29,34 +29,24 @@
             "label": "Beef Salami",
             "value": "Beef Salami",
             "count": "1"
+        },
+        {
+            "label": "Ground Beef",
+            "value": "Ground Beef",
+            "count": "1"
         }
     ],
     "Cheese" : [
-        {
-            "label": "Mozzarella",
-            "value": "Mozzarella",
-            "count" : "1"
-        },
         {
             "label": "Cheddar",
             "value": "Cheddar",
             "count" : "1"
         },
         {
-            "label": "Parmesan",
-            "value": "Parmesan",
-            "count" : "1"
-        },
-        {
             "label": "X-Cheese",
             "value": "X-Cheese",
             "count" : "1"
-        },
-        {
-            "label": "Double Cheese",
-            "value": "Double Cheese",
-            "count" : "2"
-        },      
+        },    
         {
             "label": "Feta",
             "value": "Feta",
@@ -149,6 +139,11 @@
         {
             "label" : "Chili Pepper",
             "value": "Chili Pepper",
+            "count" : "0"
+        },
+        {
+            "label": "Parmesan",
+            "value": "Parmesan",
             "count" : "0"
         },
         {

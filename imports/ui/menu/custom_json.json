@@ -7,7 +7,7 @@
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
-			"default_toppings": ["Mozzarella", "Feta", "Spinach", "White Sauce"],
+			"default_toppings": ["Feta", "Spinach", "White Sauce"],
 			"addon":  [
 				{
 					"name": "Upgrade to Large",
@@ -60,12 +60,12 @@
 		},
 		{
 			"name": "Plain Cheese Pizza",
-			"desc": "Mozzarella",
+			"desc": "Mozzarella Cheese Piza",
 			"price": "12.95",
 			"pizzas": "1",
 			"size": "Medium",
 			"toppings": "0",
-			"default_toppings": ["Mozzarella"],
+			"default_toppings": null,
 			"addon":  [
 				{
 					"name": "Upgrade to Large",

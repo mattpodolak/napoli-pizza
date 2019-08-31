@@ -361,7 +361,7 @@ export class Menu extends React.Component {
                 {        
                     freeDeliveryItems.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
-                            <DisplayText size="small">{item.desc}</DisplayText>
+                            <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
                             <Button primary
                             onClick={() => this.editItem(item.name, 'freedelivery')}
