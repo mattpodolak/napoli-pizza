@@ -274,23 +274,11 @@
     ],
     "Pasta" : [
         {
-            "label" : "Penne",
-            "value": "Penne"
-        },
-        {
-            "label" : "Lasagna",
-            "value": "Lasagna"
+            "label" : "Spaghetti",
+            "value": "Spaghetti"
         }
     ],
     "PastaSpecial" : [
-        {
-            "label" : "Penne",
-            "value": "Penne"
-        },
-        {
-            "label" : "Lasagna",
-            "value": "Lasagna"
-        },
         {
             "label" : "Spaghetti",
             "value": "Spaghetti"
