@@ -21,3 +21,4 @@ accounts-ui
 artwells:accounts-guest
 http
 force-ssl
+nimble:restivus
