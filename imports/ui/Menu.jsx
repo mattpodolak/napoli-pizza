@@ -58,6 +58,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Badge from '@material-ui/core/Badge';
+
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -83,6 +85,16 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     display: 'flex',
+  },
+  toolbar: {
+    paddingRight: 24, // keep right padding when drawer closed
+  },
+  toolbarIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
   },
   appBar: {
     background: '#2c9c3e',
@@ -126,6 +138,7 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -147,6 +160,11 @@ const styles = theme => ({
   },
   theme: {
     direction: theme.direction
+  },
+  badge: {
+    top: '50%',
+    right: -3,
+    border: `2px solid ${theme.palette.background.paper}`,
   },
 });
 
@@ -824,8 +842,17 @@ export class Menu extends React.Component {
                     >
                       <MenuIcon />
                     </IconButton>
+                    <IconButton color="inherit" edge="start" component={Link} to="/cart">
+                    <Badge 
+                      badgeContent={this.props.cartCount} 
+                      color="secondary"
+                      variant="dot"
+                    >
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
                     <Typography variant="h4" noWrap>
-                      Napoli Pizza
+                       Napoli Pizza
                     </Typography>
                   </Toolbar>
                 </AppBar>
