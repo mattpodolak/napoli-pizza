@@ -33,7 +33,7 @@ if (Meteor.isServer) {
                 var updatedMenu = this.bodyParams.menu;
 
                 var menuJSON = JSON.stringify(updatedMenu);
-                fs.writeFileSync('../../../../../imports/ui/menu/menu.json', menuJSON);
+                fs.writeFileSync('../../../../../imports/ui/menu/menu2.json', menuJSON);
 
                 function checkItems(category){
                     var items = updatedMenu[category]
