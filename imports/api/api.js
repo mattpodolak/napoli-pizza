@@ -33,7 +33,8 @@ if (Meteor.isServer) {
                 var updatedMenu = this.bodyParams.menu;
 
                 var menuJSON = JSON.stringify(updatedMenu);
-                fs.writeFile('../../../../../imports/ui/menu/menu.json', menuJSON);
+                fs.unlinkSync('../../../../../imports/ui/menu/menu.json');
+                fs.writeFileSync('../../../../../imports/ui/menu/menu.json', menuJSON);
 
                 function checkItems(category){
                     var items = updatedMenu[category]
@@ -53,7 +54,8 @@ if (Meteor.isServer) {
                 checkItems('pitas');
 
                 var json = JSON.stringify(menu);
-                fs.writeFile('../../../../../imports/ui/menu/custom_json.json', json);
+                fs.unlinkSync('../../../../../imports/ui/menu/custom_json.json');
+                fs.writeFileSync('../../../../../imports/ui/menu/custom_json.json', json);
 
             }
             catch(e){
