@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 const customMenuData = require('../ui/menu/custom_json.json');
 const menuData = require('../ui/menu/menu.json');
+import { MenuCollection } from './menu.js';
 
 if (Meteor.isServer) {
     // Global API configuration
@@ -15,10 +16,20 @@ if (Meteor.isServer) {
     Api.addRoute('menu', {authRequired: false}, {
         get: function () {
             //return menu data to website for menu management
-            return {"status": "success", "menu": menuData}
+            var menu = MenuCollection.findOne({});
+
+            if(menu == null){
+                var mainMenu = menuData;
+                var customMenu = menuData;
+                MenuCollection.insert({mainMenu, customMenu})
+                return {"status": "success", "menu": menuData}
+            }
+            else{
+                return {"status": "success", "menu": menu}
+            }
         },
         post: function () {
-            var fs = require('fs');
+            // var fs = require('fs');
             var menu = {
                 pizza_deals: [],
                 specialty: [],
@@ -31,10 +42,9 @@ if (Meteor.isServer) {
             try{
                 //accept menu with updated statuses
                 var updatedMenu = this.bodyParams.menu;
-
-                var menuJSON = JSON.stringify(updatedMenu);
-                fs.unlinkSync('../../../../../imports/ui/menu/menu.json');
-                fs.writeFileSync('../../../../../imports/ui/menu/menu.json', menuJSON);
+                // var menuJSON = JSON.stringify(updatedMenu);
+                // fs.unlinkSync('../../../../../imports/ui/menu/menu.json');
+                // fs.writeFileSync('../../../../../imports/ui/menu/menu.json', menuJSON);
 
                 function checkItems(category){
                     var items = updatedMenu[category]
@@ -53,9 +63,27 @@ if (Meteor.isServer) {
                 checkItems('sides');
                 checkItems('pitas');
 
-                var json = JSON.stringify(menu);
-                fs.unlinkSync('../../../../../imports/ui/menu/custom_json.json');
-                fs.writeFileSync('../../../../../imports/ui/menu/custom_json.json', json);
+                //updatedMenu is the full menu
+                //menu is the custom menu
+                var menuDB = MenuCollection.findOne({});
+                if(menuDB != null){
+                    MenuCollection.update(menuDB._id, {
+                        $set: 
+                        {
+                          mainMenu: updatedMenu,
+                          customMenu: menu
+                        },
+                    });
+                }
+                else{
+                    var mainMenu = updatedMenu
+                    var customMenu = menu
+                    MenuCollection.insert({mainMenu, customMenu})
+                }
+
+                // var json = JSON.stringify(menu);
+                // fs.unlinkSync('../../../../../imports/ui/menu/custom_json.json');
+                // fs.writeFileSync('../../../../../imports/ui/menu/custom_json.json', json);
 
             }
             catch(e){

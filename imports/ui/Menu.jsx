@@ -68,18 +68,19 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import { withTracker } from 'meteor/react-meteor-data';
 import { Carts } from '../api/carts.js';
+import { MenuCollection } from '../api/menu.js';
 
 //import Button as MaterialButton from '@material-ui/core/Button';
 
-const menuData = require('./menu/custom_json.json');
-const toppingData = require('./menu/topping_json.json');
-const pizzaDealsItems = menuData.pizza_deals;
-const specialtyPizzaItems = menuData.specialty;
-const freeDeliveryItems = menuData.freedelivery;
-const wingsAndSandwichesItems = menuData.wingsandsandwiches;
-const saladsItems = menuData.salads;
-const sidesItems = menuData.sides;
-const pitasItems = menuData.pitas;
+var menuData = require('./menu/custom_json.json');
+var toppingData = require('./menu/topping_json.json');
+var pizzaDealsItems = menuData.pizza_deals;
+var specialtyPizzaItems = menuData.specialty;
+var freeDeliveryItems = menuData.freedelivery;
+var wingsAndSandwichesItems = menuData.wingsandsandwiches;
+var saladsItems = menuData.salads;
+var sidesItems = menuData.sides;
+var pitasItems = menuData.pitas;
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -256,9 +257,11 @@ export class Menu extends React.Component {
       const sidesPage = (
         <Page title="Sides" separator>
           <Layout>
+          {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    sidesItems.map((item, index) => (
+                    this.props.menu.customMenu.sides.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -269,6 +272,7 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+          }
           </Layout>
         </Page>
       );
@@ -276,9 +280,11 @@ export class Menu extends React.Component {
       const saladsPage = (
         <Page title="Salads" separator>
           <Layout>
+          {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    saladsItems.map((item, index) => (
+                    this.props.menu.customMenu.salads.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -289,6 +295,7 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+          }
           </Layout>
         </Page>
       );
@@ -296,9 +303,11 @@ export class Menu extends React.Component {
       const pitasPage = (
         <Page title="Pitas" separator>
           <Layout>
+          {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    pitasItems.map((item, index) => (
+                    this.props.menu.customMenu.pitas.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -309,6 +318,7 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+          }
           </Layout>
         </Page>
       );
@@ -316,9 +326,11 @@ export class Menu extends React.Component {
       const wingsAndSandwichesPage = (
         <Page title="Wings and Sandwiches" separator>
           <Layout>
+          {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    wingsAndSandwichesItems.map((item, index) => (
+                    this.props.menu.customMenu.wingsandsandwiches.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -329,6 +341,7 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+          }
           </Layout>
         </Page>
       );
@@ -336,9 +349,11 @@ export class Menu extends React.Component {
       const specialtyPizzaPage = (
         <Page title="Specialty Pizza" separator>
           <Layout>
+            {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    specialtyPizzaItems.map((item, index) => (
+                    this.props.menu.customMenu.specialty.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -349,6 +364,7 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+            }
           </Layout>
         </Page>
       );
@@ -356,9 +372,11 @@ export class Menu extends React.Component {
       const pizzaDealsPage = (
         <Page title="Pizza Deals" separator>
           <Layout>
+          {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    pizzaDealsItems.map((item, index) => (
+                    this.props.menu.customMenu.pizza_deals.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -369,15 +387,18 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+          }
           </Layout>
         </Page>
       );
       const freeDeliveryPage = (
         <Page title="Free Delivery Menu" separator>
           <Layout>
+          {
+              this.props.menu &&
             <Layout.Section>
                 {        
-                    freeDeliveryItems.map((item, index) => (
+                    this.props.menu.customMenu.freedelivery.map((item, index) => (
                         <Card title={'$' + item.price + ' - ' + item.name} sectioned>
                             <Typography variant="h5" gutterBottom>{item.desc}</Typography>
                             <br/>
@@ -388,6 +409,7 @@ export class Menu extends React.Component {
                     ))
                 }
             </Layout.Section>
+          }
           </Layout>
         </Page>
       );
@@ -1217,8 +1239,10 @@ export class Menu extends React.Component {
     withStyles(styles, { withTheme: true }),
     withTracker((props) => {
       Meteor.subscribe('carts');
+      Meteor.subscribe('menuCollection');
       return {
         cart: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).fetch(),
+        menu: MenuCollection.findOne({}),
         cartCount: Carts.find({userId: Meteor.userId()}, {sort: { createdAt: -1 }}).count(),
         currentUser: Meteor.user(),
       };
